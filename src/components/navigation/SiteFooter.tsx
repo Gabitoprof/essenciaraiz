@@ -17,7 +17,7 @@ export function SiteFooter() {
             <Logo />
             <p className="mt-4">Seu prazer pela vida de volta em 21 dias.</p>
           </div>
-          <nav aria-label="Informações legais">
+          <nav aria-label="Informações e contato">
             <ul className="flex flex-col gap-3">
               {legalNav.map((item) => (
                 <li key={item.to}>

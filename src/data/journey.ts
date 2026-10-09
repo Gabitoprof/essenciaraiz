@@ -9,20 +9,20 @@ import type { JourneyDay, JourneyWeek } from '@/types/journey'
 export const journeyWeeks: JourneyWeek[] = [
   {
     week: 1,
-    title: 'Semana 1: Raiz',
-    description: 'Reconhecer onde você está hoje.',
+    title: 'Voltar para si',
+    description: 'Desacelerar, perceber o corpo e reconhecer, com gentileza, como você está hoje.',
     days: [1, 2, 3, 4, 5, 6, 7],
   },
   {
     week: 2,
-    title: 'Semana 2: Consciência',
-    description: 'Observar padrões e abrir espaço para o novo.',
+    title: 'Cultivar novas possibilidades',
+    description: 'Observar seus padrões sem julgamento e experimentar pequenas escolhas diferentes.',
     days: [8, 9, 10, 11, 12, 13, 14],
   },
   {
     week: 3,
-    title: 'Semana 3: Essência',
-    description: 'Trazer o prazer de volta para o dia a dia.',
+    title: 'Florescer com autonomia',
+    description: 'Integrar o que fez sentido e levar esses momentos de cuidado para a sua rotina.',
     days: [15, 16, 17, 18, 19, 20, 21],
   },
 ]

@@ -70,6 +70,15 @@ Componentes reutilizáveis:
 | `LoadingState`, `ErrorState`, `EmptyState` | `components/feedback` | Estados de carregamento, erro e conteúdo vazio |
 | `LeafMark`, `BotanicalDivider`, `RootLines` | `components/decor` | Ornamentos de folhas e raízes, sempre decorativos |
 
+## Página inicial
+
+Os textos ficam em `src/data/home.ts` e cada seção é um componente em `src/components/home`.
+As âncoras `/#como-funciona`, `/#a-jornada` e `/#perguntas-frequentes` são usadas pelo menu.
+
+Para colocar a foto da seção principal, salve o arquivo em `public/imagens/` e informe o caminho
+em `hero.image.src` (ex.: `'/imagens/hero.jpg'`), com uma descrição em `hero.image.alt`.
+Enquanto não houver foto, aparece um espaço reservado com a mesma proporção (4:5).
+
 ## Rotas
 
 | Caminho | Página | Acesso |
@@ -81,6 +90,7 @@ Componentes reutilizáveis:
 | `/privacidade` | Política de privacidade | público |
 | `/termos` | Termos de uso | público |
 | `/orientacoes-de-seguranca` | Orientações de segurança | público |
+| `/contato` | Contato (provisório) | público |
 | `/guia-visual` | Guia visual dos componentes | só em desenvolvimento |
 | `/app` | Painel pessoal | logado |
 | `/app/boas-vindas` | Onboarding da participante | logado |

@@ -5,6 +5,8 @@ type SectionTone = 'claro' | 'bege' | 'verde'
 
 interface SectionProps {
   children: ReactNode
+  /** Âncora da seção; o espaçamento extra evita que o cabeçalho fixo cubra o título. */
+  id?: string
   tone?: SectionTone
   labelledBy?: string
   className?: string
@@ -18,9 +20,9 @@ const tones: Record<SectionTone, string> = {
 }
 
 /** Faixa de página com espaçamento vertical padrão e fundo da paleta. */
-export function Section({ children, tone = 'claro', labelledBy, className = '', containerClassName = '' }: SectionProps) {
+export function Section({ children, id, tone = 'claro', labelledBy, className = '', containerClassName = '' }: SectionProps) {
   return (
-    <section aria-labelledby={labelledBy} className={`py-secao lg:py-secao-lg ${tones[tone]} ${className}`}>
+    <section id={id} aria-labelledby={labelledBy} className={`scroll-mt-18 py-secao lg:py-secao-lg ${tones[tone]} ${className}`}>
       <Container className={containerClassName}>{children}</Container>
     </section>
   )

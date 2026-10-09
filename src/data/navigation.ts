@@ -1,9 +1,12 @@
 import { BookHeart, Headphones, Home, LineChart, Map, UserRound } from 'lucide-react'
-import { paths } from '@/config/routes'
+import { homeSections, paths } from '@/config/routes'
 import type { NavItem } from '@/types/navigation'
 
+/** Links do cabeçalho público: levam às seções da página inicial. */
 export const publicNav: NavItem[] = [
-  { label: 'Entrar', to: paths.login },
+  { label: 'Como funciona', to: paths.homeSection(homeSections.howItWorks) },
+  { label: 'A jornada', to: paths.homeSection(homeSections.journey) },
+  { label: 'Perguntas frequentes', to: paths.homeSection(homeSections.faq) },
 ]
 
 export const appNav: NavItem[] = [
@@ -19,4 +22,5 @@ export const legalNav: NavItem[] = [
   { label: 'Privacidade', to: paths.privacy },
   { label: 'Termos de uso', to: paths.terms },
   { label: 'Orientações de segurança', to: paths.safety },
+  { label: 'Contato', to: paths.contact },
 ]

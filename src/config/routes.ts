@@ -1,3 +1,10 @@
+/** Âncoras das seções da página inicial. */
+export const homeSections = {
+  howItWorks: 'como-funciona',
+  journey: 'a-jornada',
+  faq: 'perguntas-frequentes',
+} as const
+
 /** Todos os caminhos do app em um só lugar, para não espalhar strings pelas páginas. */
 export const paths = {
   home: '/',
@@ -7,6 +14,8 @@ export const paths = {
   privacy: '/privacidade',
   terms: '/termos',
   safety: '/orientacoes-de-seguranca',
+  contact: '/contato',
+  homeSection: (id: string) => `/#${id}`,
   /** Só existe em desenvolvimento (npm run dev). */
   styleGuide: '/guia-visual',
 

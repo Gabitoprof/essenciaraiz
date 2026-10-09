@@ -1,6 +1,7 @@
 import { Check, Lock } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { Card } from '@/components/ui/Card'
+import { Eyebrow } from '@/components/ui/Eyebrow'
 import { PageHeader } from '@/components/ui/PageHeader'
 import { paths } from '@/config/routes'
 import { journeyWeeks } from '@/data/journey'
@@ -36,7 +37,8 @@ export function JourneyPage() {
       <div className="flex flex-col gap-6">
         {journeyWeeks.map((week) => (
           <Card key={week.week}>
-            <h2 className="text-titulo-2">{week.title}</h2>
+            <Eyebrow>Semana {week.week}</Eyebrow>
+            <h2 className="mt-1 text-titulo-2">{week.title}</h2>
             <p className="mt-1 text-apoio text-tinta-suave">{week.description}</p>
             <ol className="mt-6 grid grid-cols-4 gap-2.5 sm:grid-cols-7">
               {week.days.map((day) => {
