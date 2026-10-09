@@ -1,0 +1,15 @@
+@import "tailwindcss";
+
+@theme {
+  --color-raiz-50: #f7f4ee;
+  --color-raiz-100: #ede6d8;
+  --color-raiz-500: #8a6a45;
+  --color-raiz-700: #5c4630;
+  --color-raiz-900: #2f241a;
+  --color-folha-500: #5f7a52;
+  --color-folha-700: #435a39;
+}
+
+body {
+  @apply bg-raiz-50 text-raiz-900 antialiased;
+}
