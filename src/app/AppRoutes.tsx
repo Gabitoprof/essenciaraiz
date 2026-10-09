@@ -13,6 +13,7 @@ import { ProgressPage } from '@/pages/app/ProgressPage'
 import { ForgotPasswordPage } from '@/pages/auth/ForgotPasswordPage'
 import { LoginPage } from '@/pages/auth/LoginPage'
 import { SignupPage } from '@/pages/auth/SignupPage'
+import { StyleGuidePage } from '@/pages/dev/StyleGuidePage'
 import { PrivacyPage } from '@/pages/legal/PrivacyPage'
 import { SafetyPage } from '@/pages/legal/SafetyPage'
 import { TermsPage } from '@/pages/legal/TermsPage'
@@ -30,6 +31,7 @@ export function AppRoutes() {
         <Route path={paths.privacy} element={<PrivacyPage />} />
         <Route path={paths.terms} element={<TermsPage />} />
         <Route path={paths.safety} element={<SafetyPage />} />
+        {import.meta.env.DEV && <Route path={paths.styleGuide} element={<StyleGuidePage />} />}
         <Route path="*" element={<NotFoundPage />} />
       </Route>
 

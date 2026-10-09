@@ -7,6 +7,8 @@ export const paths = {
   privacy: '/privacidade',
   terms: '/termos',
   safety: '/orientacoes-de-seguranca',
+  /** Só existe em desenvolvimento (npm run dev). */
+  styleGuide: '/guia-visual',
 
   onboarding: '/app/boas-vindas',
   dashboard: '/app',

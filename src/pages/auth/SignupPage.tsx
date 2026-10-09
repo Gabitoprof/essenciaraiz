@@ -27,9 +27,9 @@ export function SignupPage() {
   }
 
   return (
-    <Card>
-      <h1 className="text-2xl font-semibold">Criar conta</h1>
-      <form onSubmit={handleSubmit} className="mt-6 flex flex-col gap-4">
+    <Card className="sm:p-8">
+      <h1 className="text-titulo-1">Criar conta</h1>
+      <form onSubmit={handleSubmit} className="mt-8 flex flex-col gap-5">
         <TextField label="Nome" name="name" autoComplete="given-name" required />
         <TextField label="E-mail" name="email" type="email" autoComplete="email" required />
         <TextField
@@ -40,13 +40,13 @@ export function SignupPage() {
           minLength={8}
           required
         />
-        <Button type="submit" disabled={isSubmitting}>
+        <Button type="submit" isLoading={isSubmitting} fullWidth>
           Criar conta
         </Button>
       </form>
-      <p className="mt-6 text-sm">
+      <p className="mt-8 text-apoio">
         Já tem conta?{' '}
-        <Link to={paths.login} className="font-semibold text-terra-700 hover:underline">
+        <Link to={paths.login} className="font-medium text-oliva-700 underline-offset-4 hover:underline">
           Entrar
         </Link>
       </p>

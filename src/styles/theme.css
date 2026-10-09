@@ -1,0 +1,69 @@
+/*
+ * Tokens de design da Essência Raiz | Consciência.
+ * Tudo que define a identidade visual mora aqui: cores, tipografia, espaçamentos,
+ * raios, sombras e movimento. Cada token vira uma classe do Tailwind
+ * (ex.: --color-oliva-600 → bg-oliva-600, text-oliva-600).
+ *
+ * Regras de contraste (WCAG AA, conferidas):
+ * - tinta (#34372F) passa em qualquer fundo da paleta (≥ 7.7:1).
+ * - oliva-600 e terra-600 passam como texto sobre branco-quente, bege e verde-claro (≥ 4.8:1),
+ *   mas não usar em texto pequeno sobre areia.
+ * - sálvia e areia são decorativas: bordas, fundos e ornamentos, nunca texto.
+ */
+@theme {
+  /* Paleta da marca */
+  --color-oliva-700: #45533d; /* hover / pressionado */
+  --color-oliva-600: #53634a; /* verde oliva: ação principal */
+  --color-salvia-400: #a6b49a; /* verde sálvia: detalhes e ornamentos */
+  --color-salvia-100: #e8eee3; /* verde muito claro: fundos suaves */
+  --color-bege-100: #f4efe6; /* bege: seções alternadas */
+  --color-areia-300: #dccdb8; /* areia: bordas e divisores */
+  --color-terra-700: #5f4e42; /* hover do marrom */
+  --color-terra-600: #766253; /* marrom terroso: destaques e texto secundário quente */
+  --color-branco-quente: #fcfaf6; /* fundo principal */
+  --color-tinta: #34372f; /* texto principal */
+  --color-tinta-suave: #5c5f55; /* texto de apoio (6.3:1 sobre branco-quente) */
+  --color-erro-600: #9a3f2f; /* mensagens de erro (6.4:1 sobre branco-quente) */
+  --color-erro-100: #f6e7e2;
+
+  /* Tipografia */
+  --font-serif: "Cormorant Garamond Variable", "Cormorant Garamond", Georgia, serif;
+  --font-sans: "Inter Variable", Inter, Lato, ui-sans-serif, system-ui, sans-serif;
+
+  --text-display: 2.75rem; /* celular; cresce com sm:/lg: nos componentes */
+  --text-display--line-height: 1.05;
+  --text-display--letter-spacing: -0.01em;
+  --text-titulo-1: 2.25rem;
+  --text-titulo-1--line-height: 1.1;
+  --text-titulo-2: 1.75rem;
+  --text-titulo-2--line-height: 1.15;
+  --text-titulo-3: 1.375rem;
+  --text-titulo-3--line-height: 1.25;
+  --text-corpo: 1.0625rem; /* 17px: leitura confortável no celular */
+  --text-corpo--line-height: 1.7;
+  --text-apoio: 0.9375rem;
+  --text-apoio--line-height: 1.6;
+  --text-legenda: 0.8125rem;
+  --text-legenda--line-height: 1.5;
+  --text-legenda--letter-spacing: 0.08em;
+
+  /* Espaçamentos de layout (o restante usa a escala padrão do Tailwind) */
+  --spacing-secao: 4.5rem;
+  --spacing-secao-lg: 7rem;
+  --container-leitura: 40rem;
+  --container-pagina: 72rem;
+
+  /* Raios: cantos discretamente arredondados */
+  --radius-campo: 0.625rem;
+  --radius-botao: 0.75rem;
+  --radius-cartao: 1.125rem;
+
+  /* Sombras quase imperceptíveis */
+  --shadow-suave: 0 1px 2px rgb(52 55 47 / 0.04), 0 10px 30px -18px rgb(52 55 47 / 0.18);
+  --shadow-elevada: 0 2px 4px rgb(52 55 47 / 0.05), 0 18px 40px -20px rgb(52 55 47 / 0.25);
+
+  /* Movimento: transições curtas e suaves */
+  --ease-suave: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --default-transition-duration: 200ms;
+  --default-transition-timing-function: cubic-bezier(0.22, 0.61, 0.36, 1);
+}

@@ -20,19 +20,19 @@ export function ForgotPasswordPage() {
   }
 
   return (
-    <Card>
-      <h1 className="text-2xl font-semibold">Recuperar senha</h1>
+    <Card className="sm:p-8">
+      <h1 className="text-titulo-1">Recuperar senha</h1>
       {sent ? (
-        <p role="status" className="mt-4 text-raiz-700">
+        <p role="status" className="mt-4 text-tinta-suave">
           Se o e-mail estiver cadastrado, você vai receber as instruções para criar uma nova senha.
         </p>
       ) : (
-        <form onSubmit={handleSubmit} className="mt-6 flex flex-col gap-4">
+        <form onSubmit={handleSubmit} className="mt-8 flex flex-col gap-5">
           <TextField label="E-mail" name="email" type="email" autoComplete="email" required />
-          <Button type="submit">Enviar instruções</Button>
+          <Button type="submit" fullWidth>Enviar instruções</Button>
         </form>
       )}
-      <Link to={paths.login} className="mt-6 inline-block text-sm text-terra-700 hover:underline">
+      <Link to={paths.login} className="mt-8 inline-block text-apoio text-oliva-700 underline-offset-4 hover:underline">
         Voltar para o login
       </Link>
     </Card>

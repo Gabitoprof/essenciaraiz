@@ -26,11 +26,16 @@ function writeSession(session: AuthSession | null) {
   }
 }
 
+function nameFromEmail(email: string) {
+  const local = email.split('@')[0] ?? ''
+  return local ? local.charAt(0).toUpperCase() + local.slice(1) : 'Participante'
+}
+
 function createUser(email: string, name?: string): UserProfile {
   return {
     id: 'dev-user',
     email,
-    name: name || email.split('@')[0] || 'Participante',
+    name: name || nameFromEmail(email),
     onboardingCompleted: false,
   }
 }

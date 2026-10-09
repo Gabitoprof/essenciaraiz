@@ -18,13 +18,15 @@ export function AppNavLinks({ orientation }: AppNavLinksProps) {
             end={end}
             className={({ isActive }) =>
               [
-                'flex items-center rounded-xl transition-colors',
-                vertical ? 'gap-3 px-3 py-2.5 text-sm' : 'flex-col gap-1 px-1 py-2 text-[11px]',
-                isActive ? 'bg-areia-100 font-semibold text-terra-700' : 'text-raiz-700 hover:bg-areia-100',
+                'flex items-center rounded-botao transition-colors duration-200 ease-suave',
+                vertical ? 'gap-3 px-3.5 py-2.5 text-apoio' : 'flex-col gap-1 px-0.5 py-2 text-[0.6875rem]',
+                isActive
+                  ? 'bg-salvia-100 font-medium text-oliva-700'
+                  : 'text-tinta-suave hover:bg-bege-100 hover:text-tinta',
               ].join(' ')
             }
           >
-            {Icon && <Icon aria-hidden="true" className="size-5" />}
+            {Icon && <Icon aria-hidden="true" className="size-5" strokeWidth={1.5} />}
             <span>{label}</span>
           </NavLink>
         </li>

@@ -1,51 +1,5 @@
 @import "tailwindcss";
-
-/* Paleta e tipografia da marca. Ajustar aqui muda o app inteiro. */
-@theme {
-  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-  --font-serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
-
-  --color-areia-50: #faf6f1;
-  --color-areia-100: #f3ebe1;
-  --color-areia-200: #e6d6c3;
-  --color-terra-500: #a0674b;
-  --color-terra-600: #8a543a;
-  --color-terra-700: #6e412c;
-  --color-raiz-900: #2e211b;
-  --color-raiz-700: #5a4438;
-  --color-folha-600: #5d7350;
-}
-
-@layer base {
-  html {
-    scroll-behavior: smooth;
-  }
-
-  body {
-    @apply bg-areia-50 font-sans text-raiz-900 antialiased;
-  }
-
-  h1,
-  h2,
-  h3 {
-    @apply font-serif;
-  }
-
-  /* Foco sempre visível para navegação por teclado. */
-  :focus-visible {
-    @apply outline-2 outline-offset-2 outline-terra-600;
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    html {
-      scroll-behavior: auto;
-    }
-
-    *,
-    *::before,
-    *::after {
-      animation-duration: 0.01ms !important;
-      transition-duration: 0.01ms !important;
-    }
-  }
-}
+@import "@fontsource-variable/cormorant-garamond/wght.css";
+@import "@fontsource-variable/inter/wght.css";
+@import "./theme.css";
+@import "./base.css";

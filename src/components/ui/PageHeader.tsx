@@ -1,19 +1,23 @@
 import type { ReactNode } from 'react'
+import { Eyebrow } from './Eyebrow'
 
 interface PageHeaderProps {
   title: string
+  eyebrow?: string
   description?: string
   actions?: ReactNode
 }
 
-export function PageHeader({ title, description, actions }: PageHeaderProps) {
+/** Título padrão das páginas internas. */
+export function PageHeader({ title, eyebrow, description, actions }: PageHeaderProps) {
   return (
-    <header className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+    <header className="mb-10 flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
       <div>
-        <h1 className="text-3xl font-semibold sm:text-4xl">{title}</h1>
-        {description && <p className="mt-2 max-w-2xl text-raiz-700">{description}</p>}
+        {eyebrow && <Eyebrow className="mb-2">{eyebrow}</Eyebrow>}
+        <h1 className="text-titulo-1 sm:text-[2.75rem]">{title}</h1>
+        {description && <p className="mt-3 max-w-leitura text-tinta-suave">{description}</p>}
       </div>
-      {actions}
+      {actions && <div className="shrink-0">{actions}</div>}
     </header>
   )
 }

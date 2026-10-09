@@ -16,9 +16,9 @@ export function SignOutButton() {
     <button
       type="button"
       onClick={handleClick}
-      className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm text-raiz-700 hover:bg-areia-100"
+      className="flex w-full items-center gap-3 rounded-botao px-3.5 py-2.5 text-apoio text-tinta-suave transition-colors hover:bg-bege-100 hover:text-tinta"
     >
-      <LogOut aria-hidden="true" className="size-5" />
+      <LogOut aria-hidden="true" className="size-5" strokeWidth={1.5} />
       Sair
     </button>
   )
