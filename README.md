@@ -13,7 +13,7 @@ a maior parte das páginas ainda mostra conteúdo provisório.
 - Tailwind CSS v4
 - React Router
 - Lucide React (ícones)
-- Supabase (previsto para autenticação e banco de dados, ainda não configurado)
+- Supabase Auth (`@supabase/supabase-js`), opcional: sem configuração, o site usa o modo demonstração
 
 ## Pré-requisitos
 
@@ -37,13 +37,57 @@ Outros comandos:
 | `npm run preview` | Serve a versão de produção localmente |
 | `npm run lint` | Analisa o código com o oxlint |
 
-## Autenticação (provisória)
+## Autenticação
 
-Enquanto o Supabase não é integrado, o login é **apenas de desenvolvimento**:
-qualquer e-mail e senha entram, e a sessão fica salva no navegador (localStorage).
-Para trocar pelo Supabase, crie uma implementação de `AuthService`
-(`src/services/auth/authService.ts`) e aponte para ela em `src/services/auth/index.ts`.
-As variáveis previstas estão em `.env.example`.
+A entrada da participante (cadastro, login, recuperação de senha e onboarding) funciona em dois modos,
+escolhidos automaticamente em `src/services/auth/index.ts`:
+
+| | Modo demonstração | Supabase Auth |
+| --- | --- | --- |
+| Quando | `VITE_SUPABASE_URL` ou `VITE_SUPABASE_ANON_KEY` vazias | As duas variáveis preenchidas |
+| Contas | Só no localStorage deste navegador | No Supabase |
+| Senha | Não é verificada nem guardada | Verificada pelo Supabase (nunca fica no site) |
+| E-mails (confirmação e recuperação) | Não são enviados | Enviados pelo Supabase |
+| Aviso na tela | Faixa "Modo demonstração" em todas as telas de conta | Nenhum |
+
+O modo demonstração serve só para navegar e testar as telas. Ele **não é seguro** e não deve ser publicado
+como se fosse uma plataforma real.
+
+### Configurar o Supabase
+
+1. Crie um projeto em https://supabase.com e copie a **Project URL** e a chave **anon / publishable**
+   (Project Settings > API).
+2. Copie `.env.example` para `.env.local` e preencha as duas variáveis. Reinicie o `npm run dev`.
+3. Em **Authentication > URL Configuration**:
+   - **Site URL**: o endereço do site (em desenvolvimento, `http://localhost:5173`).
+   - **Redirect URLs**: inclua `http://localhost:5173/redefinir-senha` e `http://localhost:5173/app/boas-vindas`,
+     e os mesmos caminhos no domínio de produção.
+4. Em **Authentication > Sign In / Providers > Email**, decida se a confirmação de e-mail fica ligada.
+   Ligada: após o cadastro aparece a tela "Confirme seu e-mail". Desligada: a participante entra direto no onboarding.
+5. Opcional: traduza os modelos de e-mail para português em **Authentication > Emails** e configure um SMTP próprio
+   (o envio padrão do Supabase tem limite baixo por hora).
+
+Nunca coloque a chave `service_role` em variáveis `VITE_`: elas vão para o navegador.
+
+### Como os dados ficam guardados
+
+- Nome de exibição, onboarding concluído e respostas do onboarding (como prefere ser chamada, intenção e período)
+  ficam em `user_metadata` do usuário no Supabase Auth. Isso basta por enquanto, mas a própria usuária pode alterar
+  esses campos, então eles não servem para decidir permissões.
+- Quando houver dados próprios da jornada (diário, progresso), crie tabelas com **Row Level Security** ligada e
+  políticas do tipo `auth.uid() = user_id`. As rotas privadas do site (`ProtectedRoute`) só organizam a navegação:
+  quem protege os dados de verdade é o Supabase.
+
+### O que foi testado e o que depende do Supabase real
+
+- **Testado no navegador (modo demonstração):** validação dos formulários, mensagens de erro, estados de carregamento,
+  mostrar/esconder senha, links entre as telas, onboarding com perguntas puladas, proteção de rotas, redirecionamentos,
+  encerramento de sessão e acessibilidade (axe-core).
+- **Testado contra um servidor falso que imita a API do Supabase Auth:** cadastro com e sem confirmação de e-mail,
+  login com senha errada, sessão mantida ao recarregar, onboarding salvo em `user_metadata`, troca de senha,
+  e-mail duplicado, limite de tentativas e saída.
+- **Ainda não testado com um projeto Supabase real:** envio e conteúdo dos e-mails, abertura dos links de confirmação
+  e de recuperação (a sessão que volta pela URL), configuração de Redirect URLs e regras de senha do projeto.
 
 ## Identidade visual
 
@@ -84,16 +128,17 @@ Enquanto não houver foto, aparece um espaço reservado com a mesma proporção 
 | Caminho | Página | Acesso |
 | --- | --- | --- |
 | `/` | Página inicial pública | público |
-| `/entrar` | Login | público |
-| `/cadastro` | Cadastro | público |
+| `/entrar` | Login | só visitantes |
+| `/cadastro` | Cadastro | só visitantes |
 | `/recuperar-senha` | Recuperação de senha | público |
+| `/redefinir-senha` | Nova senha (link do e-mail) | público, exige o link do Supabase |
 | `/privacidade` | Política de privacidade | público |
 | `/termos` | Termos de uso | público |
 | `/orientacoes-de-seguranca` | Orientações de segurança | público |
 | `/contato` | Contato (provisório) | público |
 | `/guia-visual` | Guia visual dos componentes | só em desenvolvimento |
-| `/app` | Painel pessoal | logado |
-| `/app/boas-vindas` | Onboarding da participante | logado |
+| `/app` | Painel pessoal | logado, após o onboarding |
+| `/app/boas-vindas` | Onboarding da participante | logado, até concluir |
 | `/app/jornada` | Jornada dos 21 dias | logado |
 | `/app/jornada/dia/:dia` | Página de cada dia | logado |
 | `/app/biblioteca` | Biblioteca de áudios e conteúdos | logado |
@@ -112,8 +157,9 @@ src/
   components/   Componentes reutilizáveis (ui, navigation, feedback, journey, home, decor)
   layouts/      Layout público, de autenticação e da área da participante
   data/         Conteúdo separado da apresentação: textos da home, jornada, menus
-  hooks/        useAuth, useDocumentTitle, useJourneyProgress
-  services/     Serviços externos (autenticação; futuramente Supabase)
+  hooks/        useAuth, useDocumentTitle, useFormErrors, useJourneyProgress
+  utils/        Validações de formulário e redirecionamento após o login
+  services/     Autenticação: contrato, Supabase Auth e modo demonstração
   providers/    Contextos React (sessão)
   types/        Tipos TypeScript
   styles/       theme.css (tokens), base.css (estilos globais) e index.css

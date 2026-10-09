@@ -11,6 +11,8 @@ export const paths = {
   login: '/entrar',
   signup: '/cadastro',
   forgotPassword: '/recuperar-senha',
+  /** Destino do link de recuperação enviado por e-mail (Supabase). */
+  resetPassword: '/redefinir-senha',
   privacy: '/privacidade',
   terms: '/termos',
   safety: '/orientacoes-de-seguranca',

@@ -15,7 +15,8 @@ export function DashboardPage() {
   const { session } = useAuth()
   const { completedDays, currentDay, getDayStatus } = useJourneyProgress()
   const today = getJourneyDay(currentDay)
-  const firstName = session?.user.name.split(' ')[0]
+  const user = session?.user
+  const firstName = (user?.preferences.preferredName || user?.displayName || '').split(' ')[0]
 
   return (
     <section>

@@ -12,6 +12,7 @@ import { ProfilePage } from '@/pages/app/ProfilePage'
 import { ProgressPage } from '@/pages/app/ProgressPage'
 import { ForgotPasswordPage } from '@/pages/auth/ForgotPasswordPage'
 import { LoginPage } from '@/pages/auth/LoginPage'
+import { ResetPasswordPage } from '@/pages/auth/ResetPasswordPage'
 import { SignupPage } from '@/pages/auth/SignupPage'
 import { StyleGuidePage } from '@/pages/dev/StyleGuidePage'
 import { ContactPage } from '@/pages/legal/ContactPage'
@@ -21,8 +22,17 @@ import { TermsPage } from '@/pages/legal/TermsPage'
 import { HomePage } from '@/pages/public/HomePage'
 import { NotFoundPage } from '@/pages/public/NotFoundPage'
 import { paths } from '@/config/routes'
+import { OnboardingGate } from './OnboardingGate'
 import { ProtectedRoute } from './ProtectedRoute'
+import { PublicOnlyRoute } from './PublicOnlyRoute'
 
+/**
+ * Mapa de rotas.
+ * - Públicas: qualquer visitante.
+ * - Só para visitantes (cadastro e login): quem já entrou é levado para dentro.
+ * - Privadas: exigem sessão (ProtectedRoute) e onboarding concluído (OnboardingGate).
+ * A proteção de dados de verdade fica no Supabase (RLS); veja o comentário em ProtectedRoute.
+ */
 export function AppRoutes() {
   return (
     <Routes>
@@ -37,24 +47,32 @@ export function AppRoutes() {
         <Route path="*" element={<NotFoundPage />} />
       </Route>
 
-      {/* Cadastro, login e recuperação de senha */}
       <Route element={<AuthLayout />}>
-        <Route path={paths.login} element={<LoginPage />} />
-        <Route path={paths.signup} element={<SignupPage />} />
+        {/* Só para quem ainda não entrou */}
+        <Route element={<PublicOnlyRoute />}>
+          <Route path={paths.login} element={<LoginPage />} />
+          <Route path={paths.signup} element={<SignupPage />} />
+        </Route>
+        {/* Recuperação de senha: funciona com ou sem sessão */}
         <Route path={paths.forgotPassword} element={<ForgotPasswordPage />} />
+        <Route path={paths.resetPassword} element={<ResetPasswordPage />} />
       </Route>
 
       {/* Área da participante: exige sessão */}
       <Route element={<ProtectedRoute />}>
-        <Route element={<AppLayout />}>
-          <Route path={paths.dashboard} element={<DashboardPage />} />
-          <Route path={paths.onboarding} element={<OnboardingPage />} />
-          <Route path={paths.journey} element={<JourneyPage />} />
-          <Route path={paths.journeyDay(':day')} element={<JourneyDayPage />} />
-          <Route path={paths.library} element={<LibraryPage />} />
-          <Route path={paths.journal} element={<JournalPage />} />
-          <Route path={paths.progress} element={<ProgressPage />} />
-          <Route path={paths.profile} element={<ProfilePage />} />
+        <Route element={<OnboardingGate />}>
+          <Route element={<AuthLayout width="largo" />}>
+            <Route path={paths.onboarding} element={<OnboardingPage />} />
+          </Route>
+          <Route element={<AppLayout />}>
+            <Route path={paths.dashboard} element={<DashboardPage />} />
+            <Route path={paths.journey} element={<JourneyPage />} />
+            <Route path={paths.journeyDay(':day')} element={<JourneyDayPage />} />
+            <Route path={paths.library} element={<LibraryPage />} />
+            <Route path={paths.journal} element={<JournalPage />} />
+            <Route path={paths.progress} element={<ProgressPage />} />
+            <Route path={paths.profile} element={<ProfilePage />} />
+          </Route>
         </Route>
       </Route>
     </Routes>

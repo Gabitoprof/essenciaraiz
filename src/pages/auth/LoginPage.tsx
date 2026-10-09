@@ -1,52 +1,92 @@
 import { useState, type FormEvent } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { FormAlert } from '@/components/feedback/FormAlert'
 import { Button } from '@/components/ui/Button'
-import { Card } from '@/components/ui/Card'
+import { PasswordField } from '@/components/ui/PasswordField'
 import { TextField } from '@/components/ui/TextField'
 import { paths } from '@/config/routes'
 import { useAuth } from '@/hooks/useAuth'
 import { useDocumentTitle } from '@/hooks/useDocumentTitle'
-import { DevAuthNotice } from './DevAuthNotice'
+import { useFormErrors } from '@/hooks/useFormErrors'
+import { authErrorMessage } from '@/services/auth'
+import { destinationAfterAuth, type AuthRedirectState } from '@/utils/authRedirect'
+import { validateEmail, validateRequiredPassword } from '@/utils/validation'
+import { AuthCard, authLinkClasses } from './AuthCard'
+
+type Field = 'email' | 'password'
 
 export function LoginPage() {
   useDocumentTitle('Entrar')
   const { signIn } = useAuth()
   const navigate = useNavigate()
   const location = useLocation()
+  const from = (location.state as AuthRedirectState | null)?.from
+  const { errors, validate, clearError } = useFormErrors<Field>()
+  const [formError, setFormError] = useState<string>()
   const [isSubmitting, setIsSubmitting] = useState(false)
-
-  const redirectTo = (location.state as { from?: string } | null)?.from ?? paths.dashboard
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
-    const form = new FormData(event.currentTarget)
+    const form = event.currentTarget
+    const data = new FormData(form)
+    const email = String(data.get('email') ?? '')
+    const password = String(data.get('password') ?? '')
+    setFormError(undefined)
+    if (!validate(form, { email: validateEmail(email), password: validateRequiredPassword(password) })) return
+
     setIsSubmitting(true)
-    await signIn({ email: String(form.get('email')), password: String(form.get('password')) })
-    navigate(redirectTo, { replace: true })
+    try {
+      const session = await signIn({ email: email.trim(), password })
+      navigate(destinationAfterAuth(session, from), { replace: true })
+    } catch (error) {
+      setFormError(authErrorMessage(error))
+      setIsSubmitting(false)
+    }
   }
 
   return (
-    <Card className="sm:p-8">
-      <h1 className="text-titulo-1">Entrar</h1>
-      <form onSubmit={handleSubmit} className="mt-8 flex flex-col gap-5">
-        <TextField label="E-mail" name="email" type="email" autoComplete="email" required />
-        <TextField label="Senha" name="password" type="password" autoComplete="current-password" required />
+    <AuthCard
+      title="Entrar"
+      description="Que bom ter você de volta."
+      footer={
+        <>
+          <Link to={paths.forgotPassword} className={authLinkClasses}>
+            Esqueci minha senha
+          </Link>
+          <p>
+            Ainda não tem conta?{' '}
+            <Link to={paths.signup} className={authLinkClasses}>
+              Criar conta
+            </Link>
+          </p>
+        </>
+      }
+    >
+      <form noValidate onSubmit={handleSubmit} className="flex flex-col gap-5">
+        {from && !formError && <FormAlert tone="info">Entre na sua conta para continuar.</FormAlert>}
+        {formError && <FormAlert>{formError}</FormAlert>}
+        <TextField
+          label="E-mail"
+          name="email"
+          type="email"
+          autoComplete="email"
+          inputMode="email"
+          required
+          error={errors.email}
+          onChange={() => clearError('email')}
+        />
+        <PasswordField
+          label="Senha"
+          name="password"
+          autoComplete="current-password"
+          required
+          error={errors.password}
+          onChange={() => clearError('password')}
+        />
         <Button type="submit" isLoading={isSubmitting} fullWidth>
-          Entrar
+          {isSubmitting ? 'Entrando…' : 'Entrar'}
         </Button>
       </form>
-      <div className="mt-8 flex flex-col gap-3 text-apoio">
-        <Link to={paths.forgotPassword} className="text-oliva-700 underline-offset-4 hover:underline">
-          Esqueci minha senha
-        </Link>
-        <p>
-          Ainda não tem conta?{' '}
-          <Link to={paths.signup} className="font-medium text-oliva-700 underline-offset-4 hover:underline">
-            Cadastre-se
-          </Link>
-        </p>
-      </div>
-      <DevAuthNotice />
-    </Card>
+    </AuthCard>
   )
 }

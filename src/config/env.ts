@@ -1,7 +1,12 @@
 /**
- * Leitura centralizada das variáveis de ambiente.
- * O Supabase ainda não está configurado: enquanto as variáveis estiverem vazias,
- * o app usa o serviço de autenticação local de desenvolvimento.
+ * Leitura centralizada das variáveis de ambiente públicas.
+ *
+ * Só entram aqui valores que o Supabase autoriza expor no navegador:
+ * a URL do projeto e a chave pública (anon / publishable). A chave `service_role`
+ * (ou qualquer chave secreta) NUNCA deve ir para variáveis `VITE_`, porque tudo que
+ * começa com `VITE_` acaba no código enviado ao navegador.
+ *
+ * Enquanto as duas variáveis estiverem vazias, o app roda em modo demonstração.
  */
 export const env = {
   supabaseUrl: import.meta.env.VITE_SUPABASE_URL ?? '',
