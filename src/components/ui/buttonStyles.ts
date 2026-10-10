@@ -1,4 +1,4 @@
-export type ButtonVariant = 'primary' | 'secondary' | 'ghost'
+export type ButtonVariant = 'primary' | 'secondary' | 'ghost' | 'danger'
 export type ButtonSize = 'md' | 'sm'
 
 interface ButtonStyleOptions {
@@ -15,6 +15,8 @@ const variants: Record<ButtonVariant, string> = {
   primary: 'bg-oliva-600 text-branco-quente shadow-suave hover:bg-oliva-700',
   secondary: 'border border-oliva-600/70 bg-transparent text-oliva-700 hover:border-oliva-700 hover:bg-salvia-100',
   ghost: 'text-oliva-700 hover:bg-salvia-100',
+  /** Só para ações que apagam algo, sempre com confirmação. */
+  danger: 'bg-erro-600 text-branco-quente shadow-suave hover:bg-[#843526]',
 }
 
 const sizes: Record<ButtonSize, string> = {

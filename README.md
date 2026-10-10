@@ -122,6 +122,30 @@ que é base científica, reflexão filosófica e prática experiencial; nenhuma 
 meditações e visualizações apresentadas como práticas de bem-estar, com aviso de cuidado e link para as orientações de
 segurança. Os áudios ainda não foram gravados: a página mostra o roteiro em texto e diz isso, sem player falso.
 
+## Diário
+
+`/app/diario` lista os registros; `/app/diario/novo` cria e `/app/diario/:id` edita ou exclui (com confirmação).
+Cada registro tem texto, título opcional, dia da jornada opcional, pergunta opcional (`src/data/journalPrompts.ts`)
+e datas de criação e atualização. "Exportar" baixa um arquivo `.txt` legível, gerado no próprio aparelho.
+A página de cada dia tem "Escrever no diário", que abre um registro já com o dia e a pergunta de escrita.
+
+O diário é tratado como conteúdo sensível: fica só no localStorage deste navegador, separado por conta
+(`src/services/journal/localJournalService.ts`), não é registrado no console e não é enviado a nenhum serviço.
+A versão com Supabase vai implementar o mesmo contrato (`JournalService`), com RLS por participante.
+
+## Biblioteca
+
+- **Conteúdos** (`src/data/library/`): nove temas, cada um com uma etiqueta de evidência (base científica, ciência em
+  desenvolvimento, filosofia, prática e tradição, evidência limitada) e um texto de limites. Os conteúdos com
+  `status: 'publicado'` abrem em `/app/biblioteca/conteudos/:id`; os pendentes aparecem com "Em preparação" e sem link.
+  Hoje há 4 publicados (neuroplasticidade, respiração lenta, óleos essenciais com segurança e física quântica) e 7 pendentes.
+- **Áudios** (`src/data/library/audios.ts`): nenhum arquivo de áudio foi fornecido, então todos aparecem como
+  "Em produção", sem player, com link para o roteiro no dia da jornada. Para publicar um áudio, salve o arquivo em
+  `public/audios/`, preencha `src`, a duração real e use `status: 'publicado'`. O player (`AudioPlayer`) usa os controles
+  nativos do navegador, mostra carregamento e erro com "Tentar novamente" e retoma de onde parou neste aparelho.
+  Ele foi testado com um arquivo de teste gerado só para o teste (não incluído no projeto). No guia visual, ele aparece
+  se existir `public/audios/teste-guia.mp3`.
+
 ## Identidade visual
 
 - **Tokens** (cores, tipografia, espaçamentos, raios, sombras e movimento): `src/styles/theme.css`.
@@ -176,10 +200,13 @@ Enquanto não houver foto, aparece um espaço reservado com a mesma proporção 
 | `/app/boas-vindas` | Onboarding da participante | logado, até concluir |
 | `/app/jornada` | Jornada dos 21 dias | logado |
 | `/app/jornada/dia/:dia` | Página de cada dia | logado |
-| `/app/biblioteca` | Biblioteca de áudios e conteúdos | logado |
-| `/app/biblioteca/audios` | Biblioteca de áudios (em preparação) | logado |
-| `/app/biblioteca/conteudos` | Biblioteca de conteúdos (em preparação) | logado |
-| `/app/diario` | Diário de reflexão | logado |
+| `/app/biblioteca` | Biblioteca (conteúdos e áudios) | logado |
+| `/app/biblioteca/audios` | Biblioteca de áudios | logado |
+| `/app/biblioteca/conteudos` | Biblioteca de conteúdos | logado |
+| `/app/biblioteca/conteudos/:id` | Conteúdo da biblioteca | logado |
+| `/app/diario` | Diário: lista de registros | logado |
+| `/app/diario/novo` | Novo registro | logado |
+| `/app/diario/:id` | Editar ou excluir registro | logado |
 | `/app/progresso` | Minha evolução (em preparação) | logado |
 | `/app/perfil` | Perfil e configurações | logado |
 
@@ -196,7 +223,7 @@ src/
   data/         Conteúdo separado da apresentação: textos da home, jornada (data/journey), painel, menus
   hooks/        useAuth, useDocumentTitle, useFormErrors, useJourneyProgress
   utils/        Validações de formulário e redirecionamento após o login
-  services/     Autenticação (Supabase Auth e modo demonstração) e progresso da jornada
+  services/     Autenticação (Supabase Auth e modo demonstração), progresso da jornada e diário
   providers/    Contextos React (sessão e progresso)
   types/        Tipos TypeScript
   styles/       theme.css (tokens), base.css (estilos globais) e index.css

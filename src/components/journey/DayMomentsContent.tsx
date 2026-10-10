@@ -1,3 +1,7 @@
+import { PenLine } from 'lucide-react'
+import { Link } from 'react-router-dom'
+import { buttonClasses } from '@/components/ui/buttonStyles'
+import { paths } from '@/config/routes'
 import { MomentBlock, MomentNote } from './MomentBlock'
 import type { DaytimeContent, JourneyDay, MorningContent, NightAudioKind, NightContent } from '@/types/journey'
 import type { PracticeMoment } from '@/types/progress'
@@ -50,7 +54,7 @@ export function DaytimeMoment({ content }: { content: DaytimeContent }) {
   )
 }
 
-export function NightMoment({ content }: { content: NightContent }) {
+export function NightMoment({ content, day }: { content: NightContent; day: number }) {
   return (
     <div className="flex flex-col gap-6">
       <MomentBlock title="Reflexão">
@@ -61,9 +65,12 @@ export function NightMoment({ content }: { content: NightContent }) {
       </MomentBlock>
       <MomentBlock title="Escrita consciente">
         <p>{content.writingPrompt}</p>
-        <MomentNote>
-          O diário do app ainda está em preparação. Por enquanto, escreva em um caderno ou em outro lugar só seu.
-        </MomentNote>
+        <Link
+          to={`${paths.journalNew}?${new URLSearchParams({ dia: String(day), pergunta: content.writingPrompt })}`}
+          className={buttonClasses({ variant: 'secondary', size: 'sm', className: 'self-start' })}
+        >
+          <PenLine aria-hidden="true" className="size-4" /> Escrever no diário
+        </Link>
       </MomentBlock>
       <MomentBlock title={`${audioKindLabel[content.audio.kind]}: ${content.audio.title}`}>
         <details className="group rounded-campo bg-bege-100/70 px-4 py-3">
@@ -80,6 +87,6 @@ export function NightMoment({ content }: { content: NightContent }) {
 export function DayMomentsContent({ day, moment }: { day: JourneyDay; moment: PracticeMoment }) {
   if (moment === 'despertar' && day.morning) return <MorningMoment content={day.morning} />
   if (moment === 'presenca' && day.daytime) return <DaytimeMoment content={day.daytime} />
-  if (moment === 'integrar' && day.night) return <NightMoment content={day.night} />
+  if (moment === 'integrar' && day.night) return <NightMoment content={day.night} day={day.day} />
   return null
 }

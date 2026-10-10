@@ -1,4 +1,4 @@
-import type { ButtonHTMLAttributes } from 'react'
+import type { ButtonHTMLAttributes, Ref } from 'react'
 import { Loader2 } from 'lucide-react'
 import { buttonClasses, type ButtonSize, type ButtonVariant } from './buttonStyles'
 
@@ -8,6 +8,7 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   fullWidth?: boolean
   /** Mostra um indicador de carregamento e bloqueia novos cliques. */
   isLoading?: boolean
+  ref?: Ref<HTMLButtonElement>
 }
 
 export function Button({

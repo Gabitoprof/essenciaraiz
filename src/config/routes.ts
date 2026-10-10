@@ -29,6 +29,9 @@ export const paths = {
   libraryAudios: '/app/biblioteca/audios',
   libraryContents: '/app/biblioteca/conteudos',
   journal: '/app/diario',
+  journalNew: '/app/diario/novo',
+  journalEntry: (id: string) => `/app/diario/${id}`,
+  libraryContent: (id: string) => `/app/biblioteca/conteudos/${id}`,
   progress: '/app/progresso',
   profile: '/app/perfil',
 } as const

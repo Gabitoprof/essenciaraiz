@@ -21,9 +21,9 @@ export interface DashboardShortcut {
 
 /** Atalhos para as outras áreas. `inPreparation` marca as que ainda serão desenvolvidas. */
 export const dashboardShortcuts: DashboardShortcut[] = [
-  { label: 'Diário pessoal', description: 'Um espaço privado para escrever.', to: paths.journal, icon: BookHeart, inPreparation: true },
-  { label: 'Biblioteca de áudios', description: 'Meditações e práticas guiadas.', to: paths.libraryAudios, icon: Headphones, inPreparation: true },
-  { label: 'Biblioteca de conteúdos', description: 'Leituras de apoio à jornada.', to: paths.libraryContents, icon: BookOpen, inPreparation: true },
+  { label: 'Diário pessoal', description: 'Um espaço privado para escrever.', to: paths.journal, icon: BookHeart },
+  { label: 'Biblioteca de áudios', description: 'Meditações e práticas guiadas.', to: paths.libraryAudios, icon: Headphones },
+  { label: 'Biblioteca de conteúdos', description: 'Leituras de apoio à jornada.', to: paths.libraryContents, icon: BookOpen },
   { label: 'Minha evolução', description: 'O caminho que você já percorreu.', to: paths.progress, icon: LineChart, inPreparation: true },
   { label: 'Meu perfil', description: 'Seus dados e preferências.', to: paths.profile, icon: UserRound },
 ]

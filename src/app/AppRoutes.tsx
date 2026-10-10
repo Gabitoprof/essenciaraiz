@@ -3,14 +3,16 @@ import { AppLayout } from '@/layouts/AppLayout'
 import { AuthLayout } from '@/layouts/AuthLayout'
 import { PublicLayout } from '@/layouts/PublicLayout'
 import { DashboardPage } from '@/pages/app/DashboardPage'
-import { JournalPage } from '@/pages/app/JournalPage'
+import { JournalEntryPage } from '@/pages/app/journal/JournalEntryPage'
+import { JournalPage } from '@/pages/app/journal/JournalPage'
 import { JourneyDayPage } from '@/pages/app/JourneyDayPage'
 import { JourneyPage } from '@/pages/app/JourneyPage'
-import { LibraryPage } from '@/pages/app/LibraryPage'
 import { OnboardingPage } from '@/pages/app/OnboardingPage'
 import { ProfilePage } from '@/pages/app/ProfilePage'
-import { LibraryAudiosPage } from '@/pages/app/LibraryAudiosPage'
-import { LibraryContentsPage } from '@/pages/app/LibraryContentsPage'
+import { LibraryArticlePage } from '@/pages/app/library/LibraryArticlePage'
+import { LibraryAudiosPage } from '@/pages/app/library/LibraryAudiosPage'
+import { LibraryContentsPage } from '@/pages/app/library/LibraryContentsPage'
+import { LibraryPage } from '@/pages/app/library/LibraryPage'
 import { ProgressPage } from '@/pages/app/ProgressPage'
 import { ForgotPasswordPage } from '@/pages/auth/ForgotPasswordPage'
 import { LoginPage } from '@/pages/auth/LoginPage'
@@ -73,7 +75,10 @@ export function AppRoutes() {
             <Route path={paths.library} element={<LibraryPage />} />
             <Route path={paths.libraryAudios} element={<LibraryAudiosPage />} />
             <Route path={paths.libraryContents} element={<LibraryContentsPage />} />
+            <Route path={paths.libraryContent(':id')} element={<LibraryArticlePage />} />
             <Route path={paths.journal} element={<JournalPage />} />
+            <Route path={paths.journalNew} element={<JournalEntryPage />} />
+            <Route path={paths.journalEntry(':id')} element={<JournalEntryPage />} />
             <Route path={paths.progress} element={<ProgressPage />} />
             <Route path={paths.profile} element={<ProfilePage />} />
           </Route>

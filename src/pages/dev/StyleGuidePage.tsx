@@ -17,6 +17,7 @@ import { ProgressIndicator } from '@/components/ui/ProgressIndicator'
 import { TextAreaField } from '@/components/ui/TextAreaField'
 import { TextField } from '@/components/ui/TextField'
 import { paths } from '@/config/routes'
+import { AudioPlayer } from '@/components/library/AudioPlayer'
 import { journeyDays } from '@/data/journey'
 import type { JourneyContent } from '@/types/journey'
 import { useDocumentTitle } from '@/hooks/useDocumentTitle'
@@ -154,6 +155,16 @@ export function StyleGuidePage() {
             <Badge tone="terra">Em breve</Badge>
             <Badge tone="neutro">Áudio</Badge>
           </div>
+        </div>
+      </GuideSection>
+
+      <GuideSection title="Reprodutor de áudio">
+        <p className="mb-4 max-w-leitura text-apoio text-tinta-suave">
+          Só aparece no site quando um áudio tem arquivo real. Para ver aqui, salve um arquivo de teste em
+          public/audios/teste-guia.mp3 (sem o arquivo, o reprodutor mostra o estado de erro).
+        </p>
+        <div className="max-w-md">
+          <AudioPlayer id="guia-visual" src="/audios/teste-guia.mp3" title="Áudio de teste do guia visual" />
         </div>
       </GuideSection>
 
