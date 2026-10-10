@@ -1,0 +1,56 @@
+# Publica o site no GitHub Pages a cada push em main ou base-landing-pages.
+# Em Settings > Pages, a fonte precisa ser "GitHub Actions".
+name: Publicar no GitHub Pages
+
+on:
+  push:
+    branches: [main, base-landing-pages]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run test:db
+      - name: Build
+        run: npm run build
+        env:
+          # O site fica em https://<usuario>.github.io/<repositorio>/
+          BASE_PATH: /${{ github.event.repository.name }}/
+          # Opcionais e públicos (Settings > Secrets and variables > Actions > Variables).
+          # Vazios: o site publica em modo demonstração. Nunca use a chave service_role aqui.
+          VITE_SUPABASE_URL: ${{ vars.VITE_SUPABASE_URL }}
+          VITE_SUPABASE_ANON_KEY: ${{ vars.VITE_SUPABASE_ANON_KEY }}
+      # O GitHub Pages não conhece as rotas do React Router: abrir /essenciaraiz/app direto daria 404.
+      # Com uma cópia do index.html como 404.html, o app carrega e o React Router mostra a página certa.
+      - run: cp dist/index.html dist/404.html
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

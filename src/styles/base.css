@@ -1,0 +1,46 @@
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    @apply bg-branco-quente font-sans text-corpo text-tinta antialiased;
+    text-rendering: optimizeLegibility;
+    /* Cormorant usa algarismos antigos por padrão ("21" vira "2I"); forçamos algarismos alinhados. */
+    font-variant-numeric: lining-nums;
+  }
+
+  h1,
+  h2,
+  h3 {
+    @apply font-serif font-medium text-balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  ::selection {
+    @apply bg-salvia-100 text-tinta;
+  }
+
+  /* Foco sempre visível para quem navega pelo teclado. */
+  :focus-visible {
+    @apply rounded-sm outline-2 outline-offset-3 outline-oliva-600;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
