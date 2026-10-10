@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from 'react'
+import { isDayPublished } from '@/data/journey'
 import { useAuth } from '@/hooks/useAuth'
 import { progressService } from '@/services/progress'
 import type { JourneyProgressData, PracticeMoment } from '@/types/progress'
@@ -61,7 +62,8 @@ export function JourneyProgressProvider({ children }: { children: ReactNode }) {
 
   const update = useCallback(
     async (day: number, moment: PracticeMoment, state: 'iniciado' | 'concluido') => {
-      if (!userId || !isDayUnlocked(dataRef.current, day)) return
+      // Só registra em dias liberados e com conteúdo publicado.
+      if (!userId || !isDayUnlocked(dataRef.current, day) || !isDayPublished(day)) return
       const previous = dataRef.current
       const next = withPracticeState(previous, day, moment, state, new Date().toISOString())
       if (next === previous) return

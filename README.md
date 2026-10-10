@@ -104,6 +104,24 @@ na página do dia. Abrir uma página não marca nada.
   (`src/services/progress/localProgressService.ts`). O painel avisa isso. Não há sincronização entre aparelhos:
   ela entra na etapa de persistência com Supabase, que vai implementar o mesmo contrato (`ProgressService`).
 
+## Jornada de 21 dias
+
+Todos os dias usam uma única página (`src/pages/app/JourneyDayPage.tsx`), alimentada pelos dados em `src/data/journey/`:
+
+- `index.ts`: as três semanas, a lista dos 21 dias com os títulos e `getJourneyDay`.
+- `days/dia-01.ts` a `dia-03.ts`: conteúdo completo (tema, objetivo, introdução, manhã, microprática, reflexão noturna,
+  pergunta de integração, escrita, roteiro do áudio noturno, durações e bases do conteúdo).
+- Os dias 4 a 21 têm `status: 'pendente'`: aparecem com número, semana e título, e a página diz que o conteúdo
+  está em preparação. Os momentos desses dias não podem ser marcados.
+
+Para publicar um dia: copie `days/dia-01.ts`, escreva o conteúdo, troque a linha `pendingDay(...)` do dia em `index.ts`
+e use `status: 'publicado'`. O formato de cada campo está em `src/types/journey.ts`.
+
+Regras de conteúdo seguidas nos dias publicados: reflexões originais, sem frases atribuídas a autores; cada dia separa o
+que é base científica, reflexão filosófica e prática experiencial; nenhuma promessa de cura ou transformação garantida;
+meditações e visualizações apresentadas como práticas de bem-estar, com aviso de cuidado e link para as orientações de
+segurança. Os áudios ainda não foram gravados: a página mostra o roteiro em texto e diz isso, sem player falso.
+
 ## Identidade visual
 
 - **Tokens** (cores, tipografia, espaçamentos, raios, sombras e movimento): `src/styles/theme.css`.
@@ -175,7 +193,7 @@ src/
   pages/        Uma pasta por área: public, auth, app, legal, dev
   components/   Componentes reutilizáveis (ui, navigation, feedback, journey, home, decor)
   layouts/      Layout público, de autenticação e da área da participante
-  data/         Conteúdo separado da apresentação: textos da home, jornada, menus
+  data/         Conteúdo separado da apresentação: textos da home, jornada (data/journey), painel, menus
   hooks/        useAuth, useDocumentTitle, useFormErrors, useJourneyProgress
   utils/        Validações de formulário e redirecionamento após o login
   services/     Autenticação (Supabase Auth e modo demonstração) e progresso da jornada

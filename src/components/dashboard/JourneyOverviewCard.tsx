@@ -6,7 +6,7 @@ import { ProgressIndicator } from '@/components/ui/ProgressIndicator'
 import { appConfig } from '@/config/app'
 import { paths } from '@/config/routes'
 import { dashboardTexts } from '@/data/dashboard'
-import { getJourneyDay } from '@/data/journey'
+import { getJourneyDay, isDayPublished } from '@/data/journey'
 import { getPracticeMoment } from '@/data/practiceMoments'
 import { useJourneyProgress } from '@/hooks/useJourneyProgress'
 
@@ -22,6 +22,8 @@ export function JourneyOverviewCard() {
   else if (resumeTarget.inProgress && resumeTarget.moment)
     resumeText = `Você parou em ${getPracticeMoment(resumeTarget.moment).name}, no dia ${resumeTarget.day}. Pode retomar quando quiser.`
   else if (!resumeTarget.moment) resumeText = dashboardTexts.allDoneToday
+  else if (!isDayPublished(resumeTarget.day))
+    resumeText = `O conteúdo do dia ${resumeTarget.day} ainda está em preparação. Enquanto isso, você pode rever os dias anteriores.`
   else if (hasActivity) resumeText = `Próximo passo: ${getPracticeMoment(resumeTarget.moment).name}, no dia ${resumeTarget.day}.`
 
   const resumeTo = finished
@@ -35,9 +37,11 @@ export function JourneyOverviewCard() {
           Dia {currentDay} de {appConfig.journeyLength}
         </p>
         <h2 id="dia-atual-titulo" className="mt-1 text-titulo-1">
-          {day?.theme ?? `Dia ${currentDay}`}
+          {day?.title ?? `Dia ${currentDay}`}
         </h2>
-        {day && <p className="mt-2 max-w-leitura text-tinta-suave">{day.summary}</p>}
+        <p className="mt-2 max-w-leitura text-tinta-suave">
+          {day?.status === 'publicado' && day.objective ? day.objective : 'O conteúdo deste dia ainda está em preparação.'}
+        </p>
       </div>
 
       <div>

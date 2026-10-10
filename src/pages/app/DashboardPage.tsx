@@ -7,6 +7,7 @@ import { PracticeMomentCard } from '@/components/journey/PracticeMomentCard'
 import { PageHeader } from '@/components/ui/PageHeader'
 import { paths } from '@/config/routes'
 import { dashboardShortcuts, dashboardTexts } from '@/data/dashboard'
+import { isDayPublished } from '@/data/journey'
 import { practiceMoments } from '@/data/practiceMoments'
 import { useAuth } from '@/hooks/useAuth'
 import { useDocumentTitle } from '@/hooks/useDocumentTitle'
@@ -52,6 +53,7 @@ export function DashboardPage() {
                     day={progress.currentDay}
                     state={progress.getPracticeState(progress.currentDay, moment.id)}
                     to={`${paths.journeyDay(progress.currentDay)}#${moment.id}`}
+                    published={isDayPublished(progress.currentDay)}
                   />
                 </li>
               ))}

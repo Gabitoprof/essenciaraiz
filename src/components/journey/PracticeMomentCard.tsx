@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { Badge } from '@/components/ui/Badge'
 import { Card } from '@/components/ui/Card'
 import { buttonClasses } from '@/components/ui/buttonStyles'
 import type { PracticeMomentInfo } from '@/data/practiceMoments'
@@ -11,6 +12,8 @@ interface PracticeMomentCardProps {
   day: number
   /** Endereço da prática (página do dia com a âncora do momento). */
   to: string
+  /** Falso quando o conteúdo do dia ainda está em preparação. */
+  published?: boolean
 }
 
 const actionLabel: Record<PracticeState, string> = {
@@ -20,8 +23,9 @@ const actionLabel: Record<PracticeState, string> = {
 }
 
 /** Um dos três momentos do dia (Despertar, Presença, Integrar) com o estado registrado pela participante. */
-export function PracticeMomentCard({ moment, state, day, to }: PracticeMomentCardProps) {
+export function PracticeMomentCard({ moment, state, day, to, published = true }: PracticeMomentCardProps) {
   const Icon = moment.icon
+  const label = published ? actionLabel[state] : 'Ver o dia'
 
   return (
     <Card className="flex h-full flex-col gap-4">
@@ -29,7 +33,7 @@ export function PracticeMomentCard({ moment, state, day, to }: PracticeMomentCar
         <span className="grid size-11 shrink-0 place-items-center rounded-full bg-salvia-100 text-oliva-700">
           <Icon aria-hidden="true" className="size-5" strokeWidth={1.5} />
         </span>
-        <PracticeStateBadge state={state} />
+        {published ? <PracticeStateBadge state={state} /> : <Badge tone="terra">Em preparação</Badge>}
       </div>
       <div className="flex-1">
         <p className="text-legenda font-medium uppercase text-terra-600">
@@ -41,9 +45,9 @@ export function PracticeMomentCard({ moment, state, day, to }: PracticeMomentCar
       <Link
         to={to}
         className={buttonClasses({ variant: state === 'concluido' ? 'ghost' : 'secondary', size: 'sm', className: 'self-start' })}
-        aria-label={`${actionLabel[state]}: ${moment.name}, dia ${day}`}
+        aria-label={`${label}: ${moment.name}, dia ${day}`}
       >
-        {actionLabel[state]}
+        {label}
       </Link>
     </Card>
   )

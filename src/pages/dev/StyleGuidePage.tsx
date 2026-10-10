@@ -18,6 +18,7 @@ import { TextAreaField } from '@/components/ui/TextAreaField'
 import { TextField } from '@/components/ui/TextField'
 import { paths } from '@/config/routes'
 import { journeyDays } from '@/data/journey'
+import type { JourneyContent } from '@/types/journey'
 import { useDocumentTitle } from '@/hooks/useDocumentTitle'
 
 /** Tokens de cor exibidos no guia. Os valores ficam só em `styles/theme.css`. */
@@ -45,11 +46,15 @@ function GuideSection({ title, children }: { title: string; children: ReactNode 
  * Guia visual: vitrine dos tokens e componentes.
  * Disponível só em desenvolvimento (rota /guia-visual).
  */
+/** Exemplos só para o guia: não são conteúdos publicados. */
+const sampleContents: JourneyContent[] = [
+  { id: 'exemplo-audio', kind: 'audio', title: 'Exemplo de áudio', durationMinutes: 10 },
+  { id: 'exemplo-pratica', kind: 'exercicio', title: 'Exemplo de prática' },
+]
+
 export function StyleGuidePage() {
   useDocumentTitle('Guia visual')
   const [isLoading, setIsLoading] = useState(false)
-  const sampleDay = journeyDays[0]
-  const sampleContents = sampleDay.contents
 
   function simulateLoading() {
     setIsLoading(true)

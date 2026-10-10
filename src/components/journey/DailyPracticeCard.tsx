@@ -40,8 +40,8 @@ export function DailyPracticeCard({ day, status, to }: DailyPracticeCardProps) {
       </div>
 
       <div>
-        <h3 className="text-titulo-2">{day.theme}</h3>
-        <p className="mt-2 text-tinta-suave">{day.summary}</p>
+        <h3 className="text-titulo-2">{day.title}</h3>
+        <p className="mt-2 text-tinta-suave">{day.objective ?? 'Conteúdo deste dia em preparação.'}</p>
       </div>
 
       {isLocked ? (
@@ -50,7 +50,7 @@ export function DailyPracticeCard({ day, status, to }: DailyPracticeCardProps) {
         <Link
           to={to}
           className={buttonClasses({ variant: isToday ? 'primary' : 'secondary', className: 'self-start' })}
-          aria-label={`${status === 'concluido' ? 'Rever' : 'Começar'} o dia ${day.day}: ${day.theme}`}
+          aria-label={`${status === 'concluido' ? 'Rever' : 'Começar'} o dia ${day.day}: ${day.title}`}
         >
           {status === 'concluido' ? 'Rever prática' : 'Começar prática'}
         </Link>
