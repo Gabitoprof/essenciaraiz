@@ -1,4 +1,5 @@
 import { LeafMark } from '@/components/decor/LeafMark'
+import { publicAsset } from '@/utils/baseUrl'
 
 interface EditorialImageProps {
   /** Caminho da foto. Sem foto, mostra um espaço reservado com a mesma proporção. */
@@ -18,7 +19,7 @@ export function EditorialImage({ src, alt, className = '' }: EditorialImageProps
   if (src) {
     return (
       <div className={frame}>
-        <img src={src} alt={alt} loading="eager" className="size-full object-cover" />
+        <img src={publicAsset(src)} alt={alt} loading="eager" className="size-full object-cover" />
       </div>
     )
   }

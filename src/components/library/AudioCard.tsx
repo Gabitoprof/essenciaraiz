@@ -4,6 +4,7 @@ import { Badge } from '@/components/ui/Badge'
 import { Card } from '@/components/ui/Card'
 import { paths } from '@/config/routes'
 import type { AudioPractice } from '@/types/library'
+import { publicAsset } from '@/utils/baseUrl'
 import { AudioPlayer } from './AudioPlayer'
 
 /** Prática em áudio. Só mostra o player quando há um arquivo real publicado. */
@@ -30,7 +31,7 @@ export function AudioCard({ audio }: { audio: AudioPractice }) {
         <p className="mt-1 text-apoio text-tinta-suave">{audio.description}</p>
       </div>
       {playable && audio.src ? (
-        <AudioPlayer id={audio.id} src={audio.src} title={audio.title} />
+        <AudioPlayer id={audio.id} src={publicAsset(audio.src)} title={audio.title} />
       ) : (
         <div className="flex flex-col gap-2 text-apoio text-tinta-suave">
           <p>Este áudio ainda não foi gravado.</p>

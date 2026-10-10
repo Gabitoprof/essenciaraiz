@@ -21,6 +21,7 @@ import { AudioPlayer } from '@/components/library/AudioPlayer'
 import { journeyDays } from '@/data/journey'
 import type { JourneyContent } from '@/types/journey'
 import { useDocumentTitle } from '@/hooks/useDocumentTitle'
+import { publicAsset } from '@/utils/baseUrl'
 
 /** Tokens de cor exibidos no guia. Os valores ficam só em `styles/theme.css`. */
 const colorTokens = [
@@ -164,7 +165,7 @@ export function StyleGuidePage() {
           public/audios/teste-guia.mp3 (sem o arquivo, o reprodutor mostra o estado de erro).
         </p>
         <div className="max-w-md">
-          <AudioPlayer id="guia-visual" src="/audios/teste-guia.mp3" title="Áudio de teste do guia visual" />
+          <AudioPlayer id="guia-visual" src={publicAsset('/audios/teste-guia.mp3')} title="Áudio de teste do guia visual" />
         </div>
       </GuideSection>
 

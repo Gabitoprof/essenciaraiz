@@ -10,6 +10,7 @@ import type { AuthService } from './authService'
 import { AuthError, type AuthErrorCode } from './authErrors'
 import { env } from '@/config/env'
 import { paths } from '@/config/routes'
+import { absoluteAppUrl } from '@/utils/baseUrl'
 import type { AuthSession, ParticipantPreferences, ProfileChanges, UserProfile } from '@/types/user'
 
 /**
@@ -69,7 +70,7 @@ function toSession(session: Session | null): AuthSession | null {
   return session ? { user: toProfile(session.user), mode: 'supabase' } : null
 }
 
-const absoluteUrl = (path: string) => new URL(path, window.location.origin).toString()
+const absoluteUrl = absoluteAppUrl
 
 export function createSupabaseAuthService(): AuthService {
   const client: SupabaseClient = createClient(env.supabaseUrl, env.supabaseAnonKey, {

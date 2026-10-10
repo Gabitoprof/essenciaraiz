@@ -5,6 +5,8 @@ import { defineConfig } from 'vite'
 
 // https://vite.dev/config/
 export default defineConfig({
+  // "/" por padrão. O workflow do GitHub Pages define BASE_PATH=/essenciaraiz/ (o site fica em uma subpasta).
+  base: process.env.BASE_PATH || '/',
   plugins: [react(), tailwindcss()],
   resolve: {
     alias: {

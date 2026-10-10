@@ -37,6 +37,28 @@ Outros comandos:
 | `npm run preview` | Serve a versão de produção localmente |
 | `npm run lint` | Analisa o código com o oxlint |
 
+## Publicar no GitHub Pages
+
+O workflow `.github/workflows/pages.yml` gera o site e publica no GitHub Pages a cada push em `main` ou
+`base-landing-pages` (ou manualmente, em Actions > "Publicar no GitHub Pages" > Run workflow).
+O endereço fica `https://<usuario>.github.io/<repositorio>/`, por exemplo https://gabitoprof.github.io/essenciaraiz/.
+
+Configuração única no GitHub:
+
+1. **Settings > Pages > Build and deployment > Source:** escolha **GitHub Actions**. A opção "Deploy from a branch"
+   publica o código-fonte sem compilar e a página fica em branco.
+2. **Settings > Environments > github-pages > Deployment branches and tags:** adicione `base-landing-pages`
+   enquanto o site for publicado a partir desta branch. Por padrão só a branch principal pode publicar.
+   Depois que o PR for incorporado à `main`, essa regra não é mais necessária.
+3. Opcional, quando houver Supabase: em **Settings > Secrets and variables > Actions > Variables**, crie
+   `VITE_SUPABASE_URL` e `VITE_SUPABASE_ANON_KEY` (valores públicos). Sem elas o site publica em modo demonstração.
+   No Supabase, acrescente às Redirect URLs `https://gabitoprof.github.io/essenciaraiz/redefinir-senha` e
+   `https://gabitoprof.github.io/essenciaraiz/app/boas-vindas`.
+
+Como funciona: o build usa `BASE_PATH=/<repositorio>/` (o site fica em uma subpasta), o React Router usa esse caminho
+como base e uma cópia do `index.html` vira `404.html`, para que abrir um endereço interno direto (ex.: `/essenciaraiz/app`)
+carregue o app em vez da página de erro do GitHub. Para testar localmente: `BASE_PATH=/essenciaraiz/ npm run build`.
+
 ## Autenticação
 
 A entrada da participante (cadastro, login, recuperação de senha e onboarding) funciona em dois modos,
