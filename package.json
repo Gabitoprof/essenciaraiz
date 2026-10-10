@@ -3,9 +3,13 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "engines": {
+    "node": ">=20.19"
+  },
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
+    "build:producao": "node scripts/check-production-env.mjs && npm run build",
     "lint": "oxlint",
     "preview": "vite preview",
     "test:db": "node --test supabase/tests/*.test.mjs"

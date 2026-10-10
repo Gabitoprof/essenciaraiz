@@ -33,28 +33,28 @@ Outros comandos:
 
 | Comando | O que faz |
 | --- | --- |
-| `npm run build` | Verifica os tipos e gera a versão de produção em `dist/` |
+| `npm run build` | Verifica os tipos e gera o site em `dist/` (sem variáveis: modo demonstração) |
+| `npm run build:producao` | Confere as variáveis de produção e faz o build (usado pela Vercel e pela Netlify) |
 | `npm run preview` | Serve a versão de produção localmente |
 | `npm run lint` | Analisa o código com o oxlint |
 | `npm run test:db` | Testa as migrations e as regras de acesso (RLS) num Postgres local, sem internet |
 
-## Publicar no GitHub Pages
+## Publicar
 
-O workflow `.github/workflows/pages.yml` gera o site e publica no GitHub Pages a cada push em `main` ou
-`base-landing-pages` (ou manualmente, em Actions > "Publicar no GitHub Pages" > Run workflow).
-O endereço fica `https://<usuario>.github.io/<repositorio>/`, por exemplo https://gabitoprof.github.io/essenciaraiz/.
+- **Produção (contas e dados reais):** Vercel ou Netlify, com o Supabase. Passo a passo, variáveis, checklist de
+  lançamento e como atualizar: [docs/publicacao.md](docs/publicacao.md). O build de produção é `npm run build:producao`,
+  que para se faltar a configuração do Supabase ou se houver uma chave secreta.
+- **GitHub Pages (vitrine em modo demonstração):** https://gabitoprof.github.io/essenciaraiz/.
 
-Configuração única no GitHub:
+### GitHub Pages
 
-1. **Settings > Pages > Build and deployment > Source:** escolha **GitHub Actions**. A opção "Deploy from a branch"
-   publica o código-fonte sem compilar e a página fica em branco.
-2. **Settings > Environments > github-pages > Deployment branches and tags:** adicione `base-landing-pages`
-   enquanto o site for publicado a partir desta branch. Por padrão só a branch principal pode publicar.
-   Depois que o PR for incorporado à `main`, essa regra não é mais necessária.
-3. Opcional, quando houver Supabase: em **Settings > Secrets and variables > Actions > Variables**, crie
-   `VITE_SUPABASE_URL` e `VITE_SUPABASE_ANON_KEY` (valores públicos). Sem elas o site publica em modo demonstração.
-   No Supabase, acrescente às Redirect URLs `https://gabitoprof.github.io/essenciaraiz/redefinir-senha` e
-   `https://gabitoprof.github.io/essenciaraiz/app/boas-vindas`.
+O workflow `.github/workflows/pages.yml` roda lint, testes do banco e build, e publica no GitHub Pages a cada push em
+`main` ou `base-landing-pages` (ou manualmente, em Actions > "Publicar no GitHub Pages" > Run workflow).
+Configuração única: em **Settings > Pages > Build and deployment > Source**, escolha **GitHub Actions** (a opção
+"Deploy from a branch" publica o código-fonte sem compilar e a página fica em branco).
+
+O workflow lê `VITE_SUPABASE_URL` e `VITE_SUPABASE_ANON_KEY` das variáveis do repositório, se existirem. **Não cadastre
+ali o Supabase de produção:** o GitHub Pages não permite cabeçalhos de segurança. Use, no máximo, um projeto de testes.
 
 Como funciona: o build usa `BASE_PATH=/<repositorio>/` (o site fica em uma subpasta), o React Router usa esse caminho
 como base e uma cópia do `index.html` vira `404.html`, para que abrir um endereço interno direto (ex.: `/essenciaraiz/app`)

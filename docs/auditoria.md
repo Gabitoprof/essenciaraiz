@@ -78,7 +78,7 @@ Estes itens impedem um lançamento com participantes reais, mas não são erros 
 4. **Biblioteca:** 7 dos 11 conteúdos estão em preparação.
 5. **Textos institucionais:** privacidade, termos e contato estão em rascunho, com campos entre colchetes (responsável, CPF/CNPJ, e-mail, idade mínima, pagamento e reembolso, foro).
 6. **Foto:** a imagem da página inicial é uma ilustração provisória (opcional).
-7. **Cabeçalhos de segurança:** o GitHub Pages não permite configurar CSP e outros cabeçalhos de segurança. Isso entra na escolha da hospedagem (etapa 10).
+7. **Cabeçalhos de segurança:** o GitHub Pages não permite configurar CSP e outros cabeçalhos de segurança. Resolvido na etapa 10 para a Vercel e a Netlify (`vercel.json` e `netlify.toml`); o Pages fica só como vitrine em modo demonstração.
 8. **Testes no repositório:** os testes de navegador desta auditoria rodaram fora do repositório. Só os testes de RLS (`npm run test:db`) estão versionados e rodam no workflow.
 
 ## Riscos que exigem revisão manual

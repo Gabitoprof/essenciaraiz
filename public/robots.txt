@@ -1,0 +1,4 @@
+# A área da participante é privada e não precisa aparecer em buscadores.
+User-agent: *
+Disallow: /app/
+Disallow: /redefinir-senha

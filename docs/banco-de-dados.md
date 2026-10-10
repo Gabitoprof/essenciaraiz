@@ -65,6 +65,7 @@ Todas as tabelas têm `created_at`/`updated_at` (atualizado por gatilho). Ao cri
 | --- | --- | --- |
 | `VITE_SUPABASE_URL` | `.env.local` (local) e variáveis do GitHub/hospedagem | Project URL (Project Settings > API) |
 | `VITE_SUPABASE_ANON_KEY` | idem | chave pública `anon` ou `sb_publishable_...` |
+| `VITE_SITE_URL` | idem | endereço final do site (veja [publicacao.md](publicacao.md)) |
 
 São valores públicos por natureza (vão para o navegador); a segurança vem do RLS. No GitHub Pages, cadastre-as em
 **Settings > Secrets and variables > Actions > Variables** (o workflow já as lê).
