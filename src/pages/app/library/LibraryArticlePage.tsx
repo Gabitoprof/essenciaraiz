@@ -23,6 +23,7 @@ export function LibraryArticlePage() {
 
       {!published || !category ? (
         <EmptyState
+          headingLevel="h1"
           title={article ? 'Este conteúdo ainda está em preparação' : 'Conteúdo não encontrado'}
           description={article ? 'Ele aparece aqui assim que for publicado.' : 'O endereço pode estar incompleto.'}
           action={<ButtonLink to={paths.libraryContents}>Ver os conteúdos</ButtonLink>}

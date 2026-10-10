@@ -1,10 +1,6 @@
-import { LegalPage } from './LegalPage'
+import { DocumentPage } from '@/components/feedback/DocumentPage'
+import { safetyDocument } from '@/data/institutional'
 
 export function SafetyPage() {
-  return (
-    <LegalPage
-      title="Orientações de segurança"
-      description="Cuidados durante a jornada e quando procurar ajuda profissional."
-    />
-  )
+  return <DocumentPage document={safetyDocument} />
 }

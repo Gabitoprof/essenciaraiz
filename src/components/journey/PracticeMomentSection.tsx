@@ -49,8 +49,8 @@ export function PracticeMomentSection({
   return (
     <section id={moment.id} aria-labelledby={headingId} className="scroll-mt-24 outline-none md:scroll-mt-8">
       <Card className="flex flex-col gap-6 sm:p-8">
-        <div className="flex items-start justify-between gap-4">
-          <div className="flex items-center gap-4">
+        <div className="flex flex-wrap items-start justify-between gap-x-4 gap-y-3">
+          <div className="flex min-w-0 items-center gap-4">
             <span className="grid size-12 shrink-0 place-items-center rounded-full bg-salvia-100 text-oliva-700">
               <Icon aria-hidden="true" className="size-5" strokeWidth={1.5} />
             </span>

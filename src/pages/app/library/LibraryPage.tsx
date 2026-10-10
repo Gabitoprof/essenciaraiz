@@ -36,7 +36,7 @@ export function LibraryPage() {
   return (
     <section>
       <PageHeader eyebrow="Para aprofundar" title="Biblioteca" description="Leituras e práticas em áudio para acompanhar a jornada, no seu ritmo." />
-      <ul className="grid gap-4 md:grid-cols-2">
+      <ul className="grid gap-4 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2">
         <li>
           <HubCard
             to={paths.libraryContents}

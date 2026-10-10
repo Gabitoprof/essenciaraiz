@@ -45,7 +45,7 @@ export function DashboardPage() {
             <p className="mt-1 text-apoio text-tinta-suave">
               As durações são referências, não obrigações. Faça no seu ritmo, na ordem que funcionar para você.
             </p>
-            <ul className="mt-6 grid gap-4 md:grid-cols-3">
+            <ul className="mt-6 grid gap-4 xl:grid-cols-3">
               {practiceMoments.map((moment) => (
                 <li key={moment.id}>
                   <PracticeMomentCard
@@ -64,7 +64,7 @@ export function DashboardPage() {
             <h2 id="areas-titulo" className="text-titulo-2">
               Outras áreas
             </h2>
-            <ul className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            <ul className="mt-6 grid gap-3 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3">
               {dashboardShortcuts.map((shortcut) => (
                 <li key={shortcut.to}>
                   <ShortcutCard {...shortcut} />

@@ -36,8 +36,9 @@ export function JournalEntryPage() {
   if (!isNew && !entry) {
     return (
       <EmptyState
+        headingLevel="h1"
         title="Registro não encontrado"
-        description="Ele pode ter sido excluído ou estar salvo em outro aparelho."
+        description="Ele pode ter sido excluído ou o endereço está incompleto."
         action={<ButtonLink to={paths.journal}>Voltar para o diário</ButtonLink>}
       />
     )
@@ -134,7 +135,7 @@ function JournalEntryForm({ entry, journal }: JournalEntryFormProps) {
           }}
         />
 
-        <div className="grid gap-6 sm:grid-cols-2">
+        <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2">
           <TextField
             label="Título (opcional)"
             name="title"

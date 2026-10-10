@@ -1,5 +1,6 @@
-import { LegalPage } from './LegalPage'
+import { DocumentPage } from '@/components/feedback/DocumentPage'
+import { termsDocument } from '@/data/institutional'
 
 export function TermsPage() {
-  return <LegalPage title="Termos de uso" description="As regras de uso da plataforma e da mentoria." />
+  return <DocumentPage document={termsDocument} />
 }

@@ -44,7 +44,7 @@ export function LibraryContentsPage() {
         </dl>
       </details>
 
-      <div role="group" aria-label="Filtrar por tema" className="mb-10 flex gap-2 overflow-x-auto pb-2 [scrollbar-width:thin]">
+      <div role="group" aria-label="Filtrar por tema" className="mb-10 flex gap-2 overflow-x-auto pb-2 [scrollbar-width:thin] lg:flex-wrap lg:overflow-visible">
         {[{ id: ALL, name: 'Todos os temas' }, ...libraryCategories].map((category) => (
           <button
             key={category.id}
@@ -75,7 +75,7 @@ export function LibraryContentsPage() {
               <p className="mt-2 max-w-leitura text-apoio text-terra-700">
                 <span className="font-medium">Limites:</span> {category.limits}
               </p>
-              <ul className="mt-5 grid gap-4 sm:grid-cols-2">
+              <ul className="mt-5 grid gap-4 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2">
                 {articles.map((article) => (
                   <li key={article.id}>
                     <ArticleCard article={article} />

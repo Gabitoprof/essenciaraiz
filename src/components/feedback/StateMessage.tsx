@@ -8,10 +8,12 @@ interface StateMessageProps {
   /** role="alert" para erros, role="status" para carregamento; vazio fica sem role. */
   role?: 'alert' | 'status'
   className?: string
+  /** h1 quando a mensagem ocupa a página inteira (ex.: "não encontrado"), para a página ter um título principal. */
+  headingLevel?: 'h1' | 'h2'
 }
 
 /** Base visual compartilhada pelos estados de carregamento, erro e vazio. */
-export function StateMessage({ icon, title, description, action, role, className = '' }: StateMessageProps) {
+export function StateMessage({ icon, title, description, action, role, className = '', headingLevel: Heading = 'h2' }: StateMessageProps) {
   return (
     <div
       role={role}
@@ -19,7 +21,7 @@ export function StateMessage({ icon, title, description, action, role, className
       className={`flex flex-col items-center rounded-cartao px-6 py-12 text-center ${className}`}
     >
       <div className="mb-4 grid size-14 place-items-center rounded-full bg-salvia-100 text-oliva-700">{icon}</div>
-      <h2 className="font-serif text-titulo-3 font-semibold">{title}</h2>
+      <Heading className="font-serif text-titulo-3 font-semibold">{title}</Heading>
       {description && <p className="mt-2 max-w-sm text-apoio text-tinta-suave">{description}</p>}
       {action && <div className="mt-6">{action}</div>}
     </div>

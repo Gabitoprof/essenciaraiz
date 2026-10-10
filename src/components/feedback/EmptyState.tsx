@@ -7,10 +7,11 @@ interface EmptyStateProps {
   description?: string
   action?: ReactNode
   icon?: ReactNode
+  headingLevel?: 'h1' | 'h2'
 }
 
 /** Estado vazio: quando ainda não há conteúdo (ex.: diário sem registros). */
-export function EmptyState({ title, description, action, icon }: EmptyStateProps) {
+export function EmptyState({ title, description, action, icon, headingLevel }: EmptyStateProps) {
   return (
     <StateMessage
       className="border border-dashed border-areia-300 bg-bege-100/60"
@@ -18,6 +19,7 @@ export function EmptyState({ title, description, action, icon }: EmptyStateProps
       title={title}
       description={description}
       action={action}
+      headingLevel={headingLevel}
     />
   )
 }

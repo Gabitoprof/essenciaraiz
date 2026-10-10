@@ -32,7 +32,7 @@ export function LibraryAudiosPage() {
             jornada.
           </p>
         ) : (
-          <ul className="mt-5 grid gap-4 md:grid-cols-2">
+          <ul className="mt-5 grid gap-4 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2">
             {available.map((audio) => (
               <li key={audio.id}>
                 <AudioCard audio={audio} />
@@ -47,7 +47,7 @@ export function LibraryAudiosPage() {
           <h2 id="audios-em-producao" className="text-titulo-2">
             Em produção
           </h2>
-          <ul className="mt-5 grid gap-4 md:grid-cols-2">
+          <ul className="mt-5 grid gap-4 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2">
             {pending.map((audio) => (
               <li key={audio.id}>
                 <AudioCard audio={audio} />

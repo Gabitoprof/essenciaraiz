@@ -30,7 +30,7 @@ export function AppLayout() {
           <SignOutButton compact />
         </header>
 
-        <main id={MAIN_CONTENT_ID} className="flex-1 px-5 pb-32 pt-10 sm:px-8 md:pb-16 md:pt-14 lg:px-12">
+        <main id={MAIN_CONTENT_ID} className="min-w-0 flex-1 px-5 pb-32 pt-10 sm:px-8 md:pb-16 md:pt-14 lg:px-12">
           <div className="mx-auto max-w-5xl">
             <JourneyProgressProvider>
               <Outlet />

@@ -3,8 +3,8 @@
 Site e área da participante da mentoria feminina **Essência Raiz | Consciência**:
 "Seu prazer pela vida de volta em 21 dias."
 
-Esta é a fundação técnica do projeto. As rotas, layouts e a estrutura já existem;
-a maior parte das páginas ainda mostra conteúdo provisório.
+Todas as áreas estão implementadas. O que ainda depende de conteúdo ou de configuração (dias 4 a 21, áudios,
+projeto Supabase, textos institucionais em rascunho) está listado em [docs/auditoria.md](docs/auditoria.md).
 
 ## Tecnologias
 
@@ -219,10 +219,10 @@ Enquanto não houver foto, aparece um espaço reservado com a mesma proporção 
 | `/cadastro` | Cadastro | só visitantes |
 | `/recuperar-senha` | Recuperação de senha | público |
 | `/redefinir-senha` | Nova senha (link do e-mail) | público, exige o link do Supabase |
-| `/privacidade` | Política de privacidade | público |
-| `/termos` | Termos de uso | público |
+| `/privacidade` | Política de privacidade (rascunho para revisão) | público |
+| `/termos` | Termos de uso (rascunho para revisão) | público |
 | `/orientacoes-de-seguranca` | Orientações de segurança | público |
-| `/contato` | Contato (provisório) | público |
+| `/contato` | Contato (rascunho com campos a preencher) | público |
 | `/guia-visual` | Guia visual dos componentes | só em desenvolvimento |
 | `/app` | Painel pessoal | logado, após o onboarding |
 | `/app/boas-vindas` | Onboarding da participante | logado, até concluir |
@@ -235,7 +235,7 @@ Enquanto não houver foto, aparece um espaço reservado com a mesma proporção 
 | `/app/diario` | Diário: lista de registros | logado |
 | `/app/diario/novo` | Novo registro | logado |
 | `/app/diario/:id` | Editar ou excluir registro | logado |
-| `/app/progresso` | Minha evolução (em preparação) | logado |
+| `/app/progresso` | Minha evolução (números, semanas e últimas práticas) | logado |
 | `/app/perfil` | Perfil e configurações | logado |
 
 Todos os caminhos ficam em `src/config/routes.ts`.

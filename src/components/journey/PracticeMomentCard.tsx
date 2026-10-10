@@ -29,7 +29,7 @@ export function PracticeMomentCard({ moment, state, day, to, published = true }:
 
   return (
     <Card className="flex h-full flex-col gap-4">
-      <div className="flex items-start justify-between gap-3">
+      <div className="flex flex-wrap items-start justify-between gap-3">
         <span className="grid size-11 shrink-0 place-items-center rounded-full bg-salvia-100 text-oliva-700">
           <Icon aria-hidden="true" className="size-5" strokeWidth={1.5} />
         </span>

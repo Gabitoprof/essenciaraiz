@@ -38,6 +38,7 @@ export function JourneyDayPage() {
 
       {!journeyDay && (
         <EmptyState
+          headingLevel="h1"
           title="Dia não encontrado"
           description={`A jornada tem ${appConfig.journeyLength} dias. Escolha um dia na lista.`}
           action={<ButtonLink to={paths.journey}>Ver a jornada</ButtonLink>}
@@ -46,6 +47,7 @@ export function JourneyDayPage() {
 
       {journeyDay && isLocked && (
         <EmptyState
+          headingLevel="h1"
           icon={<Lock aria-hidden="true" className="size-6" strokeWidth={1.5} />}
           title={`Dia ${journeyDay.day}: ${journeyDay.title}`}
           description="Este dia ainda não foi liberado. Cada dia abre quando a prática da noite (Integrar) do dia anterior é concluída. Sem pressa."

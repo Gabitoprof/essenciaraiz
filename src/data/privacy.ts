@@ -3,7 +3,11 @@
  * Os trechos entre [colchetes] precisam ser preenchidos pela responsável pelo projeto,
  * e o texto final deve ser revisado por quem cuida da parte jurídica (LGPD, Lei 13.709/2018).
  */
-export const privacyDraft = {
+import type { InstitutionalDocument } from '@/components/feedback/DocumentPage'
+
+export const privacyDraft: InstitutionalDocument = {
+  title: 'Política de privacidade',
+  description: 'Como seus dados são coletados, usados e protegidos.',
   notice:
     'Rascunho para revisão. Este texto ainda não é a política oficial: os campos entre colchetes precisam ser preenchidos e o conteúdo deve ser revisado antes da publicação.',
   updatedAt: '[data da versão final]',
