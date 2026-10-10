@@ -14,7 +14,7 @@ export const appNav: NavItem[] = [
   { label: 'Jornada', to: paths.journey, icon: Map },
   { label: 'Biblioteca', to: paths.library, icon: Headphones },
   { label: 'Diário', to: paths.journal, icon: BookHeart },
-  { label: 'Progresso', to: paths.progress, icon: LineChart },
+  { label: 'Evolução', to: paths.progress, icon: LineChart },
   { label: 'Perfil', to: paths.profile, icon: UserRound },
 ]
 

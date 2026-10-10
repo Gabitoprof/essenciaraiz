@@ -9,6 +9,8 @@ import { JourneyPage } from '@/pages/app/JourneyPage'
 import { LibraryPage } from '@/pages/app/LibraryPage'
 import { OnboardingPage } from '@/pages/app/OnboardingPage'
 import { ProfilePage } from '@/pages/app/ProfilePage'
+import { LibraryAudiosPage } from '@/pages/app/LibraryAudiosPage'
+import { LibraryContentsPage } from '@/pages/app/LibraryContentsPage'
 import { ProgressPage } from '@/pages/app/ProgressPage'
 import { ForgotPasswordPage } from '@/pages/auth/ForgotPasswordPage'
 import { LoginPage } from '@/pages/auth/LoginPage'
@@ -69,6 +71,8 @@ export function AppRoutes() {
             <Route path={paths.journey} element={<JourneyPage />} />
             <Route path={paths.journeyDay(':day')} element={<JourneyDayPage />} />
             <Route path={paths.library} element={<LibraryPage />} />
+            <Route path={paths.libraryAudios} element={<LibraryAudiosPage />} />
+            <Route path={paths.libraryContents} element={<LibraryContentsPage />} />
             <Route path={paths.journal} element={<JournalPage />} />
             <Route path={paths.progress} element={<ProgressPage />} />
             <Route path={paths.profile} element={<ProfilePage />} />

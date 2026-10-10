@@ -5,6 +5,7 @@ import { Logo } from '@/components/navigation/Logo'
 import { SignOutButton } from '@/components/navigation/SignOutButton'
 import { MAIN_CONTENT_ID } from '@/components/navigation/SkipLink'
 import { paths } from '@/config/routes'
+import { JourneyProgressProvider } from '@/providers/JourneyProgressProvider'
 
 /**
  * Área logada.
@@ -31,7 +32,9 @@ export function AppLayout() {
 
         <main id={MAIN_CONTENT_ID} className="flex-1 px-5 pb-32 pt-10 sm:px-8 md:pb-16 md:pt-14 lg:px-12">
           <div className="mx-auto max-w-5xl">
-            <Outlet />
+            <JourneyProgressProvider>
+              <Outlet />
+            </JourneyProgressProvider>
           </div>
         </main>
 

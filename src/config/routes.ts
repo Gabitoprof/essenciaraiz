@@ -26,6 +26,8 @@ export const paths = {
   journey: '/app/jornada',
   journeyDay: (day: number | string) => `/app/jornada/dia/${day}`,
   library: '/app/biblioteca',
+  libraryAudios: '/app/biblioteca/audios',
+  libraryContents: '/app/biblioteca/conteudos',
   journal: '/app/diario',
   progress: '/app/progresso',
   profile: '/app/perfil',

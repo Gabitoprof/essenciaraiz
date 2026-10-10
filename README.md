@@ -89,6 +89,21 @@ Nunca coloque a chave `service_role` em variáveis `VITE_`: elas vão para o nav
 - **Ainda não testado com um projeto Supabase real:** envio e conteúdo dos e-mails, abertura dos links de confirmação
   e de recuperação (a sessão que volta pela URL), configuração de Redirect URLs e regras de senha do projeto.
 
+## Painel e progresso
+
+O painel (`/app`) mostra o dia atual, o tema, o progresso, as três práticas do dia (Despertar, Presença e Integrar)
+e atalhos para as outras áreas. Os textos ficam em `src/data/dashboard.ts`.
+
+O progresso só muda quando a participante usa os botões "Comecei esta prática" e "Marcar como concluída"
+na página do dia. Abrir uma página não marca nada.
+
+- **Regras** (`src/utils/journeyProgress.ts`): o dia 1 está sempre liberado; cada dia seguinte abre quando a prática
+  da noite (Integrar) do dia anterior é concluída; um dia conta como concluído quando os três momentos foram concluídos.
+  "Continuar minha jornada" leva à prática iniciada mais recente ou ao próximo momento não concluído do dia atual.
+- **Onde fica guardado**: por enquanto só no localStorage deste navegador, separado por conta
+  (`src/services/progress/localProgressService.ts`). O painel avisa isso. Não há sincronização entre aparelhos:
+  ela entra na etapa de persistência com Supabase, que vai implementar o mesmo contrato (`ProgressService`).
+
 ## Identidade visual
 
 - **Tokens** (cores, tipografia, espaçamentos, raios, sombras e movimento): `src/styles/theme.css`.
@@ -107,6 +122,8 @@ Componentes reutilizáveis:
 | `Card` | `components/ui` | Superfície base dos cartões (tons claro, bege e verde) |
 | `ContentCard` | `components/journey` | Áudios, leituras e práticas (biblioteca e página do dia) |
 | `DailyPracticeCard` | `components/journey` | Prática do dia com status: concluído, hoje, disponível, em breve |
+| `PracticeMomentCard`, `PracticeMomentSection` | `components/journey` | Despertar, Presença e Integrar com o estado registrado (disponível, iniciado, concluído) |
+| `JourneyOverviewCard`, `ShortcutCard` | `components/dashboard` | Cartão principal e atalhos do painel |
 | `ProgressIndicator` | `components/ui` | Barra de progresso acessível, com pontos opcionais para os 21 dias |
 | `Badge`, `Eyebrow` | `components/ui` | Etiquetas de status e sobretítulos |
 | `Container`, `Section`, `PageHeader` | `components/ui` | Largura de página, faixas com fundo e títulos de página |
@@ -142,8 +159,10 @@ Enquanto não houver foto, aparece um espaço reservado com a mesma proporção 
 | `/app/jornada` | Jornada dos 21 dias | logado |
 | `/app/jornada/dia/:dia` | Página de cada dia | logado |
 | `/app/biblioteca` | Biblioteca de áudios e conteúdos | logado |
+| `/app/biblioteca/audios` | Biblioteca de áudios (em preparação) | logado |
+| `/app/biblioteca/conteudos` | Biblioteca de conteúdos (em preparação) | logado |
 | `/app/diario` | Diário de reflexão | logado |
-| `/app/progresso` | Acompanhamento de progresso | logado |
+| `/app/progresso` | Minha evolução (em preparação) | logado |
 | `/app/perfil` | Perfil e configurações | logado |
 
 Todos os caminhos ficam em `src/config/routes.ts`.
@@ -159,8 +178,8 @@ src/
   data/         Conteúdo separado da apresentação: textos da home, jornada, menus
   hooks/        useAuth, useDocumentTitle, useFormErrors, useJourneyProgress
   utils/        Validações de formulário e redirecionamento após o login
-  services/     Autenticação: contrato, Supabase Auth e modo demonstração
-  providers/    Contextos React (sessão)
+  services/     Autenticação (Supabase Auth e modo demonstração) e progresso da jornada
+  providers/    Contextos React (sessão e progresso)
   types/        Tipos TypeScript
   styles/       theme.css (tokens), base.css (estilos globais) e index.css
   config/       Configurações do app, rotas e variáveis de ambiente

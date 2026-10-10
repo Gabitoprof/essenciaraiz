@@ -1,19 +1,9 @@
-import type { DayStatus } from '@/types/journey'
+import { useContext } from 'react'
+import { JourneyProgressContext } from '@/providers/journeyProgressContext'
 
-/**
- * Progresso da participante na jornada.
- * Provisório: ainda não há registro de dias concluídos (virá do Supabase).
- * Por enquanto a participante está sempre no dia 1.
- */
+/** Progresso real da participante na jornada (registrado por ela, nunca inventado). */
 export function useJourneyProgress() {
-  const completedDays: number[] = []
-  const currentDay = 1
-
-  function getDayStatus(day: number): DayStatus {
-    if (completedDays.includes(day)) return 'concluido'
-    if (day === currentDay) return 'hoje'
-    return day < currentDay ? 'disponivel' : 'bloqueado'
-  }
-
-  return { completedDays, currentDay, getDayStatus }
+  const context = useContext(JourneyProgressContext)
+  if (!context) throw new Error('useJourneyProgress precisa estar dentro de <JourneyProgressProvider>.')
+  return context
 }
