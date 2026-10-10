@@ -27,4 +27,6 @@ export interface AuthService {
   updatePassword(newPassword: string): Promise<void>
   /** Atualiza nome e respostas do onboarding. */
   updateProfile(changes: ProfileChanges): Promise<AuthSession>
+  /** Exclui a conta e todos os dados dela (perfil, progresso, diário) e encerra a sessão. */
+  deleteAccount(): Promise<void>
 }

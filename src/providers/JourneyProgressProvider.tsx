@@ -71,7 +71,7 @@ export function JourneyProgressProvider({ children }: { children: ReactNode }) {
       dataRef.current = next
       setSaveError(null)
       try {
-        await progressService.save(userId, next)
+        await progressService.save(userId, next, { day, moment })
       } catch (err) {
         setData(previous)
         dataRef.current = previous

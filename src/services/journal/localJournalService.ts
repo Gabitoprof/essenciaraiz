@@ -1,8 +1,8 @@
 import { appConfig } from '@/config/app'
-import type { JournalDraft, JournalEntry } from '@/types/journal'
-import { JournalError, type JournalService } from './journalService'
+import type { JournalEntry } from '@/types/journal'
+import { localKeys } from '@/services/localKeys'
+import { cleanDraft, JournalError, type JournalService } from './journalService'
 
-const KEY_PREFIX = 'essencia-raiz:diario:'
 
 function isEntry(value: unknown): value is JournalEntry {
   if (!value || typeof value !== 'object') return false
@@ -21,7 +21,7 @@ function isEntry(value: unknown): value is JournalEntry {
 function read(userId: string): JournalEntry[] {
   let raw: string | null
   try {
-    raw = localStorage.getItem(KEY_PREFIX + userId)
+    raw = localStorage.getItem(localKeys.journal(userId))
   } catch {
     throw new JournalError('Não foi possível abrir o diário neste navegador.')
   }
@@ -36,18 +36,10 @@ function read(userId: string): JournalEntry[] {
 
 function write(userId: string, entries: JournalEntry[]) {
   try {
-    localStorage.setItem(KEY_PREFIX + userId, JSON.stringify(entries))
+    localStorage.setItem(localKeys.journal(userId), JSON.stringify(entries))
   } catch {
     throw new JournalError('Não foi possível salvar. O armazenamento do navegador pode estar cheio ou bloqueado.')
   }
-}
-
-/** Limpa o rascunho: tira espaços, descarta campos vazios e dias inválidos. */
-function clean(draft: JournalDraft): JournalDraft {
-  const title = draft.title?.trim()
-  const prompt = draft.prompt?.trim()
-  const day = draft.day && Number.isInteger(draft.day) && draft.day >= 1 && draft.day <= appConfig.journeyLength ? draft.day : undefined
-  return { title: title || undefined, body: draft.body.trim(), day, prompt: prompt || undefined }
 }
 
 function newId() {
@@ -65,7 +57,7 @@ export const localJournalService: JournalService = {
   },
 
   async create(userId, draft) {
-    const data = clean(draft)
+    const data = cleanDraft(draft)
     if (!data.body) throw new JournalError('Escreva algo antes de salvar.')
     const now = new Date().toISOString()
     const entry: JournalEntry = { id: newId(), ...data, createdAt: now, updatedAt: now }
@@ -74,7 +66,7 @@ export const localJournalService: JournalService = {
   },
 
   async update(userId, id, draft) {
-    const data = clean(draft)
+    const data = cleanDraft(draft)
     if (!data.body) throw new JournalError('Escreva algo antes de salvar.')
     const entries = read(userId)
     const current = entries.find((entry) => entry.id === id)

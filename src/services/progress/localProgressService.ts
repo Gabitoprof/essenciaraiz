@@ -1,8 +1,8 @@
 import { appConfig } from '@/config/app'
 import type { DayRecord, JourneyProgressData, PracticeMoment, PracticeRecord } from '@/types/progress'
+import { localKeys } from '@/services/localKeys'
 import { ProgressError, type ProgressService } from './progressService'
 
-const KEY_PREFIX = 'essencia-raiz:progresso:'
 const MOMENTS: PracticeMoment[] = ['despertar', 'presenca', 'integrar']
 
 function emptyProgress(): JourneyProgressData {
@@ -51,7 +51,7 @@ export const localProgressService: ProgressService = {
 
   async load(userId) {
     try {
-      const stored = localStorage.getItem(KEY_PREFIX + userId)
+      const stored = localStorage.getItem(localKeys.progress(userId))
       return stored ? sanitize(JSON.parse(stored)) : emptyProgress()
     } catch {
       throw new ProgressError('Não foi possível ler o progresso salvo neste navegador.')
@@ -60,7 +60,7 @@ export const localProgressService: ProgressService = {
 
   async save(userId, data) {
     try {
-      localStorage.setItem(KEY_PREFIX + userId, JSON.stringify(data))
+      localStorage.setItem(localKeys.progress(userId), JSON.stringify(data))
     } catch {
       throw new ProgressError('Não foi possível salvar o progresso neste navegador.')
     }

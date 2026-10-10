@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState, type ReactNode } from 'react'
 import { authService } from '@/services/auth'
+import { clearLocalUserData } from '@/services/localKeys'
 import type { AuthSession } from '@/types/user'
 import { AuthContext, type AuthContextValue } from './authContext'
 
@@ -65,6 +66,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         const next = await authService.updateProfile(changes)
         setSession(next)
         return next
+      },
+      async deleteAccount() {
+        const userId = session?.user.id
+        await authService.deleteAccount()
+        if (userId) clearLocalUserData(userId)
+        setSession(null)
       },
     }),
     [session, isLoading],

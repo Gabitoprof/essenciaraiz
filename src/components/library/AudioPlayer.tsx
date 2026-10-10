@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react'
 import { RotateCcw } from 'lucide-react'
 import { Button } from '@/components/ui/Button'
+import { localKeys } from '@/services/localKeys'
 
 interface AudioPlayerProps {
   /** Identifica a posição salva para retomar. */
@@ -9,7 +10,7 @@ interface AudioPlayerProps {
   title: string
 }
 
-const POSITION_PREFIX = 'essencia-raiz:audio-posicao:'
+const POSITION_PREFIX = localKeys.audioPositionPrefix
 const SAVE_EVERY_SECONDS = 5
 
 function formatTime(seconds: number) {

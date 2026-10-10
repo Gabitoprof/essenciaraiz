@@ -1,13 +1,14 @@
-import type { JourneyProgressData, ProgressStorage } from '@/types/progress'
+import type { JourneyProgressData, PracticeChange, ProgressStorage } from '@/types/progress'
 
 /**
  * Contrato do armazenamento do progresso.
- * Hoje há só a versão local (este navegador). A versão com Supabase vai implementar o mesmo contrato.
+ * Duas implementações: local (este navegador, modo demonstração) e Supabase (tabela practice_progress, com RLS).
  */
 export interface ProgressService {
   storage: ProgressStorage
   load(userId: string): Promise<JourneyProgressData>
-  save(userId: string, data: JourneyProgressData): Promise<void>
+  /** Grava o progresso completo; `change` diz qual prática acabou de mudar. */
+  save(userId: string, data: JourneyProgressData, change: PracticeChange): Promise<void>
 }
 
 export class ProgressError extends Error {}

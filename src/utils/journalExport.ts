@@ -29,8 +29,8 @@ export function journalToText(entries: JournalEntry[], ownerName?: string): stri
 }
 
 /** Baixa o arquivo direto no aparelho da participante. Nada é enviado a servidores. */
-export function downloadText(filename: string, text: string) {
-  const blob = new Blob([text], { type: 'text/plain;charset=utf-8' })
+export function downloadText(filename: string, text: string, type = 'text/plain;charset=utf-8') {
+  const blob = new Blob([text], { type })
   const url = URL.createObjectURL(blob)
   const link = document.createElement('a')
   link.href = url

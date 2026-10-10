@@ -11,6 +11,7 @@ export type AuthErrorCode =
   | 'session_missing'
   | 'demo_account_not_found'
   | 'not_available_in_demo'
+  | 'delete_failed'
   | 'unknown'
 
 const messages: Record<AuthErrorCode, string> = {
@@ -28,6 +29,7 @@ const messages: Record<AuthErrorCode, string> = {
     'Não encontramos uma conta de demonstração com este e-mail neste navegador. Crie uma conta para testar.',
   not_available_in_demo:
     'No modo demonstração nenhum e-mail é enviado. A recuperação de senha funciona quando o Supabase estiver configurado.',
+  delete_failed: 'Não foi possível excluir a conta agora. Nada foi apagado. Tente novamente em instantes.',
   unknown: 'Algo não saiu como esperado. Tente novamente em instantes.',
 }
 

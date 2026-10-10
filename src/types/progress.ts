@@ -24,5 +24,11 @@ export interface JourneyProgressData {
   lastActivity?: { day: number; moment: PracticeMoment; at: string }
 }
 
-/** Onde o progresso fica guardado. Hoje só existe a opção local. */
-export type ProgressStorage = 'local'
+/** Onde os dados ficam guardados: neste navegador (modo demonstração) ou no Supabase. */
+export type ProgressStorage = 'local' | 'supabase'
+
+/** Qual prática mudou numa gravação (o Supabase grava só essa linha). */
+export interface PracticeChange {
+  day: number
+  moment: PracticeMoment
+}

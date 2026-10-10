@@ -29,6 +29,7 @@ function createLazySupabaseAuthService(): AuthService {
     requestPasswordReset: (email) => ready.then((service) => service.requestPasswordReset(email)),
     updatePassword: (password) => ready.then((service) => service.updatePassword(password)),
     updateProfile: (changes) => ready.then((service) => service.updateProfile(changes)),
+    deleteAccount: () => ready.then((service) => service.deleteAccount()),
   }
 }
 

@@ -131,4 +131,15 @@ export const demoAuthService: AuthService = {
     setCurrentEmail(session.user.email)
     return currentSession() as AuthSession
   },
+
+  async deleteAccount() {
+    await wait()
+    const session = currentSession()
+    if (!session) throw new AuthError('session_missing')
+    const accounts = readAccounts()
+    delete accounts[session.user.email]
+    write(ACCOUNTS_KEY, accounts)
+    // Progresso, diário e áudios desta conta são apagados pelo AuthProvider (clearLocalUserData).
+    setCurrentEmail(null)
+  },
 }

@@ -9,7 +9,11 @@ export const journalPrompts: string[] = [
 ]
 
 export const journalTexts = {
-  privacyNote:
-    'Seu diário é só seu. Os registros ficam salvos apenas neste navegador, não são públicos e não são enviados a nenhum serviço. Em outro aparelho eles não aparecem.',
+  privacyNote: {
+    local:
+      'Seu diário é só seu. Os registros ficam salvos apenas neste navegador, não são públicos e não são enviados a nenhum serviço. Em outro aparelho eles não aparecem.',
+    supabase:
+      'Seu diário é só seu. Os registros ficam guardados na sua conta e só ela tem acesso a eles pela plataforma. Não são públicos, não são usados para publicidade e não são enviados a terceiros.',
+  },
   empty: 'Este é um espaço para você escrever o que quiser, quando quiser. Não existe jeito certo de começar.',
 }

@@ -13,7 +13,7 @@ a maior parte das páginas ainda mostra conteúdo provisório.
 - Tailwind CSS v4
 - React Router
 - Lucide React (ícones)
-- Supabase Auth (`@supabase/supabase-js`), opcional: sem configuração, o site usa o modo demonstração
+- Supabase (Auth e banco Postgres com RLS, `@supabase/supabase-js`), opcional: sem configuração, o site usa o modo demonstração
 
 ## Pré-requisitos
 
@@ -36,6 +36,7 @@ Outros comandos:
 | `npm run build` | Verifica os tipos e gera a versão de produção em `dist/` |
 | `npm run preview` | Serve a versão de produção localmente |
 | `npm run lint` | Analisa o código com o oxlint |
+| `npm run test:db` | Testa as migrations e as regras de acesso (RLS) num Postgres local, sem internet |
 
 ## Publicar no GitHub Pages
 
@@ -93,12 +94,10 @@ Nunca coloque a chave `service_role` em variáveis `VITE_`: elas vão para o nav
 
 ### Como os dados ficam guardados
 
-- Nome de exibição, onboarding concluído e respostas do onboarding (como prefere ser chamada, intenção e período)
-  ficam em `user_metadata` do usuário no Supabase Auth. Isso basta por enquanto, mas a própria usuária pode alterar
-  esses campos, então eles não servem para decidir permissões.
-- Quando houver dados próprios da jornada (diário, progresso), crie tabelas com **Row Level Security** ligada e
-  políticas do tipo `auth.uid() = user_id`. As rotas privadas do site (`ProtectedRoute`) só organizam a navegação:
-  quem protege os dados de verdade é o Supabase.
+Perfil, progresso e diário ficam em tabelas do Supabase protegidas por **Row Level Security** (cada participante
+só acessa os próprios registros). Esquema, regras, como aplicar a migration e testes estão em
+[docs/banco-de-dados.md](docs/banco-de-dados.md). As rotas privadas do site (`ProtectedRoute`) só organizam a
+navegação: quem protege os dados de verdade é o banco.
 
 ### O que foi testado e o que depende do Supabase real
 
@@ -106,7 +105,7 @@ Nunca coloque a chave `service_role` em variáveis `VITE_`: elas vão para o nav
   mostrar/esconder senha, links entre as telas, onboarding com perguntas puladas, proteção de rotas, redirecionamentos,
   encerramento de sessão e acessibilidade (axe-core).
 - **Testado contra um servidor falso que imita a API do Supabase Auth:** cadastro com e sem confirmação de e-mail,
-  login com senha errada, sessão mantida ao recarregar, onboarding salvo em `user_metadata`, troca de senha,
+  login com senha errada, sessão mantida ao recarregar, onboarding salvo na tabela `profiles`, troca de senha,
   e-mail duplicado, limite de tentativas e saída.
 - **Ainda não testado com um projeto Supabase real:** envio e conteúdo dos e-mails, abertura dos links de confirmação
   e de recuperação (a sessão que volta pela URL), configuração de Redirect URLs e regras de senha do projeto.
@@ -122,9 +121,9 @@ na página do dia. Abrir uma página não marca nada.
 - **Regras** (`src/utils/journeyProgress.ts`): o dia 1 está sempre liberado; cada dia seguinte abre quando a prática
   da noite (Integrar) do dia anterior é concluída; um dia conta como concluído quando os três momentos foram concluídos.
   "Continuar minha jornada" leva à prática iniciada mais recente ou ao próximo momento não concluído do dia atual.
-- **Onde fica guardado**: por enquanto só no localStorage deste navegador, separado por conta
-  (`src/services/progress/localProgressService.ts`). O painel avisa isso. Não há sincronização entre aparelhos:
-  ela entra na etapa de persistência com Supabase, que vai implementar o mesmo contrato (`ProgressService`).
+- **Onde fica guardado**: com o Supabase configurado, na tabela `practice_progress` (uma linha por dia e momento,
+  protegida por RLS); no modo demonstração, só no localStorage deste navegador, e o painel avisa isso.
+  As duas versões seguem o mesmo contrato (`ProgressService`).
 
 ## Jornada de 21 dias
 
@@ -151,9 +150,16 @@ Cada registro tem texto, título opcional, dia da jornada opcional, pergunta opc
 e datas de criação e atualização. "Exportar" baixa um arquivo `.txt` legível, gerado no próprio aparelho.
 A página de cada dia tem "Escrever no diário", que abre um registro já com o dia e a pergunta de escrita.
 
-O diário é tratado como conteúdo sensível: fica só no localStorage deste navegador, separado por conta
-(`src/services/journal/localJournalService.ts`), não é registrado no console e não é enviado a nenhum serviço.
-A versão com Supabase vai implementar o mesmo contrato (`JournalService`), com RLS por participante.
+O diário é tratado como conteúdo sensível: com o Supabase configurado, fica na tabela `journal_entries`, que só a
+própria participante consegue ler ou alterar (RLS); no modo demonstração, só no localStorage deste navegador.
+Nunca é registrado no console, não é público e não é enviado a terceiros.
+
+## Perfil e privacidade
+
+Em `/app/perfil` a participante edita nome e preferências, baixa todos os seus dados (`.json` com perfil, progresso
+e diário) e exclui a conta com confirmação (no Supabase, pela função `delete_my_account`, que apaga tudo em cascata).
+A política em `/privacidade` é um **rascunho para revisão** (`src/data/privacy.ts`): os campos entre colchetes
+precisam ser preenchidos antes da publicação. Detalhes em [docs/banco-de-dados.md](docs/banco-de-dados.md).
 
 ## Biblioteca
 
@@ -245,11 +251,15 @@ src/
   data/         Conteúdo separado da apresentação: textos da home, jornada (data/journey), painel, menus
   hooks/        useAuth, useDocumentTitle, useFormErrors, useJourneyProgress
   utils/        Validações de formulário e redirecionamento após o login
-  services/     Autenticação (Supabase Auth e modo demonstração), progresso da jornada e diário
+  services/     Autenticação, progresso e diário: versão Supabase e versão local (demonstração)
   providers/    Contextos React (sessão e progresso)
   types/        Tipos TypeScript
   styles/       theme.css (tokens), base.css (estilos globais) e index.css
   config/       Configurações do app, rotas e variáveis de ambiente
+supabase/
+  migrations/   Esquema do banco, RLS e políticas (versionado)
+  tests/        Testes das políticas com PGlite (npm run test:db)
+docs/           Banco de dados e privacidade
 ```
 
 O alias `@/` aponta para `src/`.

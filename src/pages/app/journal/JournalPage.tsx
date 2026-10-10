@@ -83,7 +83,7 @@ export function JournalPage() {
 
       <p className="mt-10 flex gap-2.5 text-apoio text-tinta-suave">
         <Lock aria-hidden="true" className="mt-0.5 size-4 shrink-0" />
-        {journalTexts.privacyNote}
+        {journalTexts.privacyNote[journal.storage]}
       </p>
     </section>
   )
